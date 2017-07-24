@@ -208,7 +208,7 @@ public class HomeActivity extends Activity {
                     .setPath(path)
                     .build();
             AyBoxApplication.downloadManager.download(downloadInfo);
-
+            DownloadStatusChanged downloadStatusChanged = new DownloadStatusChanged(downloadInfo);
         }
     }
 

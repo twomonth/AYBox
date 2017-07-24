@@ -15,7 +15,7 @@ public abstract class MyDownloadListener extends AbsDownloadListener {
 
   public MyDownloadListener() {
     super();
-    Log.i("集成的抽象类初始化","okok!!!!!!!");
+    Log.i("抽象类被继承了","okok!!!!!!!");
   }
 
   public MyDownloadListener(SoftReference<Object> userTag) {
@@ -25,7 +25,6 @@ public abstract class MyDownloadListener extends AbsDownloadListener {
   @Override
   public void onStart() {
     onRefresh();
-    Log.i("onRefresh","okok!!!!!!!");
   }
 
   public abstract void onRefresh();
@@ -38,20 +37,16 @@ public abstract class MyDownloadListener extends AbsDownloadListener {
   @Override
   public void onDownloading(long progress, long size) {
     onRefresh();
-    Log.i("下载监听器3，收到下载完成","");
   }
 
   @Override
   public void onRemoved() {
     onRefresh();
-    Log.i("下载监听器2，收到下载完成","");
   }
 
   @Override
   public void onDownloadSuccess() {
-
     onRefresh();
-    Log.i("下载监听器，收到下载完成","");
   }
 
   @Override

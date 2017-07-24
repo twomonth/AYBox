@@ -1,5 +1,7 @@
 package com.aygames.twomonth.aybox.download.common;
 
+import android.util.Log;
+
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
@@ -65,19 +67,23 @@ public class MyDownloadThreadInfoLocal implements Serializable {
   }
 
   public long getStart() {
+    Log.i("MyDownloadThr","start get");
     return start;
   }
 
   public void setStart(long start) {
     this.start = start;
+    Log.i("MyDownloadThr","start set");
   }
 
   public long getEnd() {
+    Log.i("MyDownloadThr","end get");
     return end;
   }
 
   public void setEnd(long end) {
     this.end = end;
+    Log.i("MyDownloadThr","end set");
   }
 
   public long getProgress() {

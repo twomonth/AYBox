@@ -9,6 +9,9 @@ import android.test.LoaderTestCase;
 import android.util.Log;
 
 import com.aygames.twomonth.aybox.download.common.DownloadStatusChanged;
+import com.aygames.twomonth.aybox.download.common.LISTener;
+import com.aygames.twomonth.aybox.download.common.MyDownloadListener;
+import com.aygames.twomonth.aybox.download.common.MyDownloadThreadInfoLocal;
 
 public class FileService extends Service {
     private FileListneer fileListneer;
@@ -32,6 +35,9 @@ public class FileService extends Service {
         fileListneer = new FileListneer(Environment.getExternalStorageDirectory().getAbsolutePath()+"/"+"AYgames");
         fileListneer.startWatching();
         Log.i("fileservice","start");
+        MyDownloadListener lisTener = new LISTener();
+        lisTener.onStart();
+        lisTener.onDownloadSuccess();
         return super.onStartCommand(intent, flags, startId);
     }
 }
