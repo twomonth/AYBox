@@ -8,10 +8,15 @@ import android.support.annotation.IntDef;
 import android.test.LoaderTestCase;
 import android.util.Log;
 
+import com.aygames.twomonth.aybox.application.AyBoxApplication;
 import com.aygames.twomonth.aybox.download.common.DownloadStatusChanged;
 import com.aygames.twomonth.aybox.download.common.LISTener;
 import com.aygames.twomonth.aybox.download.common.MyDownloadListener;
 import com.aygames.twomonth.aybox.download.common.MyDownloadThreadInfoLocal;
+
+import java.util.List;
+
+import cn.woblog.android.downloader.domain.DownloadInfo;
 
 public class FileService extends Service {
     private FileListneer fileListneer;
@@ -38,6 +43,9 @@ public class FileService extends Service {
         MyDownloadListener lisTener = new LISTener();
         lisTener.onStart();
         lisTener.onDownloadSuccess();
+        //监听正在下载的任务数量
+//        List<DownloadInfo> downloadInfos = AyBoxApplication.downloadManager.findAllDownloading();
+//        Log.i("downloadinfo",downloadInfos.toString()+"111111");
         return super.onStartCommand(intent, flags, startId);
     }
 }

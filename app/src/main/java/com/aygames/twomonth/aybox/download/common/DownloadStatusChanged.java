@@ -1,7 +1,5 @@
 package com.aygames.twomonth.aybox.download.common;
 
-import android.util.Log;
-import android.widget.Toast;
 
 import cn.woblog.android.downloader.domain.DownloadInfo;
 

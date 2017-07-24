@@ -1,5 +1,6 @@
 package com.aygames.twomonth.aybox.download.common;
 
+
 import android.util.Log;
 
 /**
@@ -9,6 +10,6 @@ import android.util.Log;
 public class LISTener extends MyDownloadListener {
     @Override
     public void onRefresh() {
-
+        Log.i("onrefresh","看这里看这里");
     }
 }
