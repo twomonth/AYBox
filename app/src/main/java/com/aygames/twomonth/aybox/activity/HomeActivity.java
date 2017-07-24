@@ -2,6 +2,8 @@ package com.aygames.twomonth.aybox.activity;
 
 import android.animation.ObjectAnimator;
 
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.app.NotificationManager;
 
 import android.content.Context;
@@ -27,10 +29,14 @@ import android.view.View;
 import android.webkit.DownloadListener;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import com.aygames.twomonth.aybox.R;
 import com.aygames.twomonth.aybox.application.AyBoxApplication;
+import com.aygames.twomonth.aybox.download.common.DownloadingFragment;
+import com.aygames.twomonth.aybox.download.common.MyDownloadListener;
+import com.aygames.twomonth.aybox.service.FileService;
 import com.aygames.twomonth.aybox.util.Constans;
 import com.aygames.twomonth.aybox.util.GetDateImpl;
 import com.aygames.twomonth.aybox.util.Installation;
@@ -172,6 +178,7 @@ public class HomeActivity extends Activity {
             }
         });
         login();
+        this.startService(new Intent(this,FileService.class));
     }
     //初始化组件
     private void init() {
@@ -183,7 +190,7 @@ public class HomeActivity extends Activity {
 //        FloatViewImpl.getInstance(this);
     }
 
-    private class MyWebViewDownLoadListener implements DownloadListener{
+    private class MyWebViewDownLoadListener implements DownloadListener {
 
         @Override
         public void onDownloadStart(String url, String userAgent, String contentDisposition, String mimetype,

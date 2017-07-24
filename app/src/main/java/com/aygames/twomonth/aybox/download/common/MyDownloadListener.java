@@ -15,6 +15,7 @@ public abstract class MyDownloadListener extends AbsDownloadListener {
 
   public MyDownloadListener() {
     super();
+    Log.i("集成的抽象类初始化","okok!!!!!!!");
   }
 
   public MyDownloadListener(SoftReference<Object> userTag) {
@@ -24,6 +25,7 @@ public abstract class MyDownloadListener extends AbsDownloadListener {
   @Override
   public void onStart() {
     onRefresh();
+    Log.i("onRefresh","okok!!!!!!!");
   }
 
   public abstract void onRefresh();

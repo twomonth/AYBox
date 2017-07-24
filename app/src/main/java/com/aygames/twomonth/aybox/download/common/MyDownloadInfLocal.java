@@ -1,5 +1,7 @@
 package com.aygames.twomonth.aybox.download.common;
 
+import android.util.Log;
+
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
