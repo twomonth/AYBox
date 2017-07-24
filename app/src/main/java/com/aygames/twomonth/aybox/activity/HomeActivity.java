@@ -34,6 +34,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import com.aygames.twomonth.aybox.R;
 import com.aygames.twomonth.aybox.application.AyBoxApplication;
+import com.aygames.twomonth.aybox.download.common.DownloadStatusChanged;
 import com.aygames.twomonth.aybox.download.common.DownloadingFragment;
 import com.aygames.twomonth.aybox.download.common.MyDownloadListener;
 import com.aygames.twomonth.aybox.service.FileService;
