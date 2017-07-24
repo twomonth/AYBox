@@ -12,7 +12,7 @@ import android.util.Log;
 import java.io.FileNotFoundException;
 
 /**
- * Created by wf05 on 2017/7/14.
+ * Created by twomonth on 2017/7/14.
  */
 
 public class InstallReceiver extends BroadcastReceiver {
