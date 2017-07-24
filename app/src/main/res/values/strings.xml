@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">福利手游</string>
+    <string name="version_splash">版本：1.0</string>
+    <string name="title_activity_home">福利盒子</string>
+    <string name="title_activity_notifi">Notifi</string>
+    <string name="title_activity_register">RegisterActivity</string>5
+    <string name="register">  *该账号手游迷平台通用，建议用户自主填写用户名。</string>
+    <string name="action_settings"> action_settings</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+</resources>

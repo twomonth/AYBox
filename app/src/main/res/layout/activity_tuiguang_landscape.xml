@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#7ac3bfbf">
+
+    <RelativeLayout
+        android:layout_width="560dp"
+        android:layout_height="300dp"
+        android:background="#222121"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true">
+
+        <TextView
+            android:id="@+id/iv_back_tg_landscape"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:text="关闭"
+            android:textColor="@color/colorOrange1"
+            android:gravity="center"
+            android:layout_marginRight="15dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="推广任务"
+            android:textSize="15dp"
+            android:textColor="@color/colorWhite"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/iv_back_tg_landscape"
+            android:layout_centerHorizontal="true"
+            android:background="#333232">
+            <LinearLayout
+                android:layout_width="370dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginLeft="15dp"
+                >
+                <TextView
+                    android:layout_width="220dp"
+                    android:layout_height="wrap_content"
+                    android:text="分享你的专属二维码、邀请链接。可以获得充值奖励、具体规则："
+                    android:textColor="@color/colorWhite"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="20dp"
+                    android:textSize="13dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1、其他人每次访问，你可获得充值点0.5元。"
+                    android:textColor="#cac8c8"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:textSize="12dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2、满足10元即可进行兑换领取,充值到游戏"
+                    android:textColor="#cac8c8"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="5dp"
+                    android:textSize="12dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="3、领取后自动发放充值到当前游戏账号、角色下"
+                    android:textColor="#cac8c8"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="5dp"
+                    android:textSize="12dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="4、作弊无效、最终解释权归手游迷所有"
+                    android:textColor="#cac8c8"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="5dp"
+                    android:textSize="12dp"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="20dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorWhite"
+                        android:text="分享人数："
+                        android:layout_marginLeft="10dp"
+                        android:layout_gravity="center_vertical"
+                        />
+                    <TextView
+                        android:id="@+id/tv_number"
+                        android:layout_width="80dp"
+                        android:layout_height="20dp"
+                        android:text="0"
+                        android:textColor="@color/colorOrange1"
+                        android:gravity="center_horizontal"
+                        android:layout_gravity="center_vertical"
+                        android:textSize="15dp"
+                        android:background="@drawable/yj_white_bg"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textSize="10dp"
+                        android:layout_gravity="center"
+                        android:textColor="@color/colorRed"
+                        />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorWhite"
+                        android:text="累计获得："
+                        android:layout_marginLeft="10dp"
+                        android:layout_gravity="center_vertical"
+                        />
+                    <TextView
+                        android:id="@+id/tv_amount"
+                        android:layout_width="80dp"
+                        android:layout_height="20dp"
+                        android:text="0"
+                        android:layout_gravity="center_vertical"
+                        android:textColor="@color/colorOrange1"
+                        android:gravity="center_horizontal"
+
+                        android:textSize="15dp"
+                        android:background="@drawable/yj_white_bg"/>
+                    <Button
+                        android:id="@+id/bt_tg_lingqu"
+                        android:layout_width="100dp"
+                        android:layout_height="30dp"
+                        android:layout_marginLeft="10dp"
+                        android:text="领取"
+                        android:background="@mipmap/text_bg"
+                        android:textSize="10dp"
+                        android:layout_gravity="center"
+                        android:textColor="@color/colorWhite"
+                        android:visibility="gone"
+                        />
+
+                </LinearLayout>
+
+            </LinearLayout>
+            <RelativeLayout
+                android:id="@+id/rl_erweima"
+                android:layout_width="250dp"
+                android:layout_height="220dp"
+                android:layout_alignParentRight="true">
+                <TextView
+                    android:layout_width="1dp"
+                    android:layout_height="150dp"
+
+                    android:layout_centerVertical="true"
+                    android:background="#a19c9c"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="专属二维码"
+                    android:layout_marginTop="19dp"
+                    android:layout_centerHorizontal="true"
+                    android:textSize="15dp"
+                    android:textColor="@color/colorWhite"/>
+                <ImageView
+                    android:id="@+id/iv_tg_erweima"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:layout_centerInParent="true"
+                    android:src="@mipmap/tgerweima"/>
+                <Button
+                    android:id="@+id/bt_tg_bctp"
+                    android:layout_width="80dp"
+                    android:layout_height="30dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@+id/iv_tg_erweima"
+                    android:text="储存至相册"
+                    android:textSize="10dp"
+                    android:layout_marginTop="10dp"
+                    android:textColor="@color/colorWhite"
+                    android:background="@mipmap/text_bg"/>
+
+            </RelativeLayout>
+            <LinearLayout
+                android:id="@+id/ll_link"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:layout_marginLeft="15dp"
+                android:layout_alignParentBottom="true"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="推广链接："
+                    android:textColor="@color/colorWhite"
+
+                    android:layout_marginLeft="10dp"
+                    android:layout_gravity="center_vertical"/>
+                <TextView
+                    android:id="@+id/tv_url"
+                    android:layout_width="280dp"
+                    android:layout_height="20dp"
+                    android:text="http://www.open.49game.cn/"
+                    android:textColor="@color/colorOrange1"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="15dp"
+                    android:background="@drawable/yj_white_bg"/>
+
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/bt_tg_copyurl"
+                android:layout_width="80dp"
+                android:layout_height="30dp"
+                android:text="复制分享链接"
+                android:textSize="10dp"
+                android:textColor="@color/colorWhite"
+                android:background="@mipmap/text_bg"
+                android:layout_toRightOf="@+id/ll_link"
+
+                android:layout_alignLeft="@+id/rl_erweima"
+                android:layout_marginLeft="85dp"
+                android:layout_alignBottom="@+id/ll_link"
+                 />
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

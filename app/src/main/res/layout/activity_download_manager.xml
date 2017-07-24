@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite"
+    android:weightSum="2">
+  <RelativeLayout
+      android:id="@+id/rl_title_download"
+      android:layout_width="match_parent"
+      android:layout_height="55dp"
+      android:background="@color/colorPrimary">
+    <ImageView
+        android:id="@+id/iv_back_download"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginLeft="10dp"
+        android:layout_centerVertical="true"
+        android:background="@mipmap/fanhui"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_margin="20dp"
+        android:text="下载管理器"/>
+
+  </RelativeLayout>
+  <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_weight="1">
+    <TextView
+        android:id="@+id/tv_zzxz"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="正在下载"
+        android:textColor="@color/back_Black"
+        android:layout_margin="10dp"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorOrange"
+        android:layout_margin="5dp"
+        android:layout_toRightOf="@+id/tv_zzxz"
+        android:layout_alignBottom="@+id/tv_zzxz"/>
+    <FrameLayout
+        android:id="@+id/fl_downloading"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_zzxz">
+    </FrameLayout>
+
+  </RelativeLayout>
+
+  <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_weight="1">
+    <TextView
+        android:id="@+id/tv_yjxz"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="游戏记录"
+        android:textColor="@color/back_Black"
+        android:layout_margin="10dp"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorOrange"
+        android:layout_margin="5dp"
+        android:layout_toRightOf="@+id/tv_yjxz"
+        android:layout_alignBottom="@+id/tv_yjxz"/>
+    <GridView
+        android:id="@+id/gv_downloaded"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:numColumns="4"
+        android:layout_below="@+id/tv_yjxz"
+        >
+
+    </GridView>
+
+  </RelativeLayout>
+
+</LinearLayout>
