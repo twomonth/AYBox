@@ -11,7 +11,7 @@ import com.aygames.twomonth.aybox.download.common.DownloadingFragment;
 import com.aygames.twomonth.aybox.util.StatusBarUtils;
 
 /**
- * Created by MyPC on 2017/6/13.
+ * Created by twomonth on 2017/6/13.
  */
 
 public class Activity_Download extends Activity {
