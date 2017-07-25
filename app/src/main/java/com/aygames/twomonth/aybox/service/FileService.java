@@ -10,7 +10,7 @@ import android.util.Log;
 
 import com.aygames.twomonth.aybox.application.AyBoxApplication;
 import com.aygames.twomonth.aybox.download.common.DownloadStatusChanged;
-import com.aygames.twomonth.aybox.download.common.LISTener;
+//import com.aygames.twomonth.aybox.download.common.LISTener;
 import com.aygames.twomonth.aybox.download.common.MyDownloadListener;
 import com.aygames.twomonth.aybox.download.common.MyDownloadThreadInfoLocal;
 
@@ -37,12 +37,10 @@ public class FileService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        fileListneer = new FileListneer(Environment.getExternalStorageDirectory().getAbsolutePath()+"/"+"AYgames");
-        fileListneer.startWatching();
-        Log.i("fileservice","start");
-        MyDownloadListener lisTener = new LISTener();
-        lisTener.onStart();
-        lisTener.onDownloadSuccess();
+//        fileListneer = new FileListneer(Environment.getExternalStorageDirectory().getAbsolutePath()+"/"+"AYgames");
+//        fileListneer.startWatching();
+//        Log.i("fileservice","start");
+//        MyDownloadListener lisTener = new LISTener();
         //监听正在下载的任务数量
 //        List<DownloadInfo> downloadInfos = AyBoxApplication.downloadManager.findAllDownloading();
 //        Log.i("downloadinfo",downloadInfos.toString()+"111111");

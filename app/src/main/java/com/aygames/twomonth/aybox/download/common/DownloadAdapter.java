@@ -214,12 +214,7 @@ public class DownloadAdapter extends
             tv_size.setText(FileUtil.formatFileSize(downloadInfo.getProgress()) + "/" + FileUtil
                 .formatFileSize(downloadInfo.getSize()));
             tv_name.setText("成功");
-            Log.i("下载成功文件路径",downloadInfo.getPath());
-//            Intent install = new Intent(Intent.ACTION_VIEW);
-//            install.addCategory(Intent.CATEGORY_DEFAULT);
-//            install.setDataAndType(Uri.parse("file://" +downloadInfo.getPath()), "application/vnd.android.package-archive");
-//            install.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//            context.startActivity(install);
+            Log.i("下载成功",downloadInfo.getPath());
             publishDownloadSuccessStatus();
             break;
           case STATUS_REMOVED:

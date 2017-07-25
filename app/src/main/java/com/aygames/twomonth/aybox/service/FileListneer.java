@@ -16,19 +16,19 @@ public class FileListneer extends FileObserver {
     public void onEvent(int i, String s) {
         switch(i){
             case FileObserver.ACCESS:
-                Log.i("fileobserver","文件被访问");
+//                Log.i("fileobserver","文件被访问");
                 break;
             case FileObserver.MODIFY:
-                Log.i("fileobserver","文件被修改");
+//                Log.i("fileobserver","文件被修改");
                 break;
             case FileObserver.CLOSE_WRITE|CLOSE_NOWRITE:
-                Log.i("fileobserver","可写文件被修改关闭"+s);
+//                Log.i("fileobserver","可写文件被修改关闭"+s);
                 break;
             case FileObserver.OPEN:
-                Log.i("fileobserver","文件被打开");
+//                Log.i("fileobserver","文件被打开");
                 break;
             case FileObserver.DELETE:
-                Log.i("fileobserver","文件被删除");
+//                Log.i("fileobserver","文件被删除");
                 break;
         }
     }

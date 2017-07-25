@@ -1,5 +1,8 @@
 package com.aygames.twomonth.aybox.download.common;
 
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.util.Log;
 
 import com.aygames.twomonth.aybox.application.AyBoxApplication;
@@ -16,9 +19,10 @@ import cn.woblog.android.downloader.exception.DownloadException;
  */
 
 public abstract class MyDownloadListener extends AbsDownloadListener {
-
-  public MyDownloadListener() {
+  private Context context;
+  public MyDownloadListener(Context context) {
     super();
+    this.context=context;
     Log.i("抽象类被继承了","okok!!!!!!!");
   }
 
@@ -56,8 +60,13 @@ public abstract class MyDownloadListener extends AbsDownloadListener {
   @Override
   public void onDownloadSuccess() {
     List<DownloadInfo> info = AyBoxApplication.downloadManager.findAllDownloaded();
+//    Log.i("ok","onDownloadSuccess");
     Log.i("ok",info.get(0).getPath());
-    Log.i("ok","onDownloadSuccess");
+    Intent install = new Intent(Intent.ACTION_VIEW);
+    install.addCategory(Intent.CATEGORY_DEFAULT);
+    install.setDataAndType(Uri.parse("file://" +info.get(0).getPath()), "application/vnd.android.package-archive");
+    install.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+    context.startActivity(install);
     onRefresh();
   }
 

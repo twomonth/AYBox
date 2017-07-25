@@ -208,7 +208,12 @@ public class HomeActivity extends Activity {
                     .setPath(path)
                     .build();
             AyBoxApplication.downloadManager.download(downloadInfo);
-            DownloadStatusChanged downloadStatusChanged = new DownloadStatusChanged(downloadInfo);
+            downloadInfo.setDownloadListener(new MyDownloadListener(getApplicationContext()) {
+                @Override
+                public void onRefresh() {
+
+                }
+            });
         }
     }
 
