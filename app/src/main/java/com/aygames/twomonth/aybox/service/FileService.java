@@ -2,21 +2,7 @@ package com.aygames.twomonth.aybox.service;
 
 import android.app.Service;
 import android.content.Intent;
-import android.os.Environment;
 import android.os.IBinder;
-import android.support.annotation.IntDef;
-import android.test.LoaderTestCase;
-import android.util.Log;
-
-import com.aygames.twomonth.aybox.application.AyBoxApplication;
-import com.aygames.twomonth.aybox.download.common.DownloadStatusChanged;
-//import com.aygames.twomonth.aybox.download.common.LISTener;
-import com.aygames.twomonth.aybox.download.common.MyDownloadListener;
-import com.aygames.twomonth.aybox.download.common.MyDownloadThreadInfoLocal;
-
-import java.util.List;
-
-import cn.woblog.android.downloader.domain.DownloadInfo;
 
 public class FileService extends Service {
     private FileListneer fileListneer;

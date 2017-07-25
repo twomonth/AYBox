@@ -19,6 +19,7 @@ import com.bumptech.glide.Glide;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.io.File;
 import java.lang.ref.SoftReference;
 import java.sql.SQLException;
 
@@ -37,9 +38,10 @@ public class DownloadAdapter extends
         BaseRecyclerViewAdapter<DownloadInfo, DownloadAdapter.ViewHolder> {
 
   private DBController dbController;
-
+  private Context context;
   public DownloadAdapter(Context context) {
     super(context);
+    this.context = context;
     try {
       dbController = DBController.getInstance(context.getApplicationContext());
     } catch (SQLException e) {
@@ -113,7 +115,7 @@ public class DownloadAdapter extends
       if (downloadInfo != null) {
         downloadInfo
             .setDownloadListener(
-                new MyDownloadListener(new SoftReference(DownloadAdapter.ViewHolder.this)) {
+                new MyDownloadListener(context,new SoftReference(DownloadAdapter.ViewHolder.this)) {
                   //  Call interval about one second.
                   @Override
                   public void onRefresh() {
@@ -126,7 +128,6 @@ public class DownloadAdapter extends
                     }
                   }
                 });
-
       }
 
       refresh();
@@ -161,6 +162,9 @@ public class DownloadAdapter extends
       iv_icon.setOnClickListener(new OnClickListener() {
         @Override
         public void onClick(View v) {
+          //删除未下载完成的文件
+          File file = new File(downloadInfo.getPath());
+          file.delete();
           downloadManager.remove(downloadInfo);
         }
       });

@@ -59,7 +59,7 @@
         android:id="@+id/tv_yjxz"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="游戏记录"
+        android:text="已下载应用"
         android:textColor="@color/back_Black"
         android:layout_margin="10dp"/>
     <TextView

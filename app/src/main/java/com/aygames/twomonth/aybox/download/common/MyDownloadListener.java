@@ -19,15 +19,16 @@ import cn.woblog.android.downloader.exception.DownloadException;
  */
 
 public abstract class MyDownloadListener extends AbsDownloadListener {
-  private Context context;
+  private Context context ;
   public MyDownloadListener(Context context) {
     super();
     this.context=context;
     Log.i("抽象类被继承了","okok!!!!!!!");
   }
 
-  public MyDownloadListener(SoftReference<Object> userTag) {
+  public MyDownloadListener(Context context,SoftReference<Object> userTag) {
     super(userTag);
+    this.context=context;
     Log.i("ok","MyDownloadListener");
   }
 
