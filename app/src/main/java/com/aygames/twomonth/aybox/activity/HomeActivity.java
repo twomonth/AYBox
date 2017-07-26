@@ -212,7 +212,7 @@ public class HomeActivity extends Activity {
                     .setPath(path)
                     .build();
             AyBoxApplication.downloadManager.download(downloadInfo);
-            downloadInfo.setDownloadListener(new MyDownloadListener(getApplicationContext()) {
+            downloadInfo.setDownloadListener(new MyDownloadListener(getApplicationContext(),downloadInfo.getPath()) {
                 @Override
                 public void onRefresh() {
 

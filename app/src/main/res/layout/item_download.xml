@@ -42,7 +42,7 @@
         android:textSize="10dp"
         android:layout_alignParentBottom="true"
         android:layout_alignRight="@+id/progressbar"
-        android:layout_alignEnd="@+id/progressbar" />
-
+        android:layout_alignEnd="@+id/progressbar"
+        />
 
 </RelativeLayout>

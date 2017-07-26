@@ -8,6 +8,7 @@ import android.util.Log;
 import com.aygames.twomonth.aybox.application.AyBoxApplication;
 
 import java.lang.ref.SoftReference;
+import java.sql.SQLException;
 import java.util.List;
 
 import cn.woblog.android.downloader.callback.AbsDownloadListener;
@@ -20,15 +21,17 @@ import cn.woblog.android.downloader.exception.DownloadException;
 
 public abstract class MyDownloadListener extends AbsDownloadListener {
   private Context context ;
-  public MyDownloadListener(Context context) {
+  private String path;
+  public MyDownloadListener(Context context,String path) {
     super();
     this.context=context;
-    Log.i("抽象类被继承了","okok!!!!!!!");
+    this.path = path;
   }
 
-  public MyDownloadListener(Context context,SoftReference<Object> userTag) {
+  public MyDownloadListener(Context context,String path,SoftReference<Object> userTag) {
     super(userTag);
     this.context=context;
+    this.path=path;
     Log.i("ok","MyDownloadListener");
   }
 
@@ -62,12 +65,18 @@ public abstract class MyDownloadListener extends AbsDownloadListener {
   public void onDownloadSuccess() {
     List<DownloadInfo> info = AyBoxApplication.downloadManager.findAllDownloaded();
 //    Log.i("ok","onDownloadSuccess");
-    Log.i("ok",info.get(0).getPath());
+    Log.i("ok",path+"");
     Intent install = new Intent(Intent.ACTION_VIEW);
     install.addCategory(Intent.CATEGORY_DEFAULT);
-    install.setDataAndType(Uri.parse("file://" +info.get(0).getPath()), "application/vnd.android.package-archive");
+    install.setDataAndType(Uri.parse("file://"+path), "application/vnd.android.package-archive");
     install.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
     context.startActivity(install);
+//    try {
+//      DBController dbController = DBController.getInstance(context.getApplicationContext());
+//      dbController.deleteMyDownloadInfo(info.get(0).getUri().hashCode());
+//    } catch (SQLException e) {
+//      e.printStackTrace();
+//    }
     onRefresh();
   }
 

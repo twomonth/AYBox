@@ -115,7 +115,7 @@ public class DownloadAdapter extends
       if (downloadInfo != null) {
         downloadInfo
             .setDownloadListener(
-                new MyDownloadListener(context,new SoftReference(DownloadAdapter.ViewHolder.this)) {
+                new MyDownloadListener(context,downloadInfo.getPath(),new SoftReference(DownloadAdapter.ViewHolder.this)) {
                   //  Call interval about one second.
                   @Override
                   public void onRefresh() {
@@ -166,6 +166,11 @@ public class DownloadAdapter extends
           File file = new File(downloadInfo.getPath());
           file.delete();
           downloadManager.remove(downloadInfo);
+          try {
+            dbController.deleteMyDownloadInfo(downloadInfo.getUri().hashCode());
+          } catch (SQLException e) {
+            e.printStackTrace();
+          }
         }
       });
 
@@ -176,17 +181,17 @@ public class DownloadAdapter extends
         tv_size.setText("");
         pb.setProgress(0);
         bt_action.setText("下载");
-        tv_name.setText("没有资源");
+        tv_name.setText(downloadInfo.getPath().substring(downloadInfo.getPath().lastIndexOf("/")+1, downloadInfo.getPath().length()).replaceAll("\\d+",""));
       } else {
         switch (downloadInfo.getStatus()) {
           case DownloadInfo.STATUS_NONE:
             bt_action.setText("下载");
-            tv_name.setText("没有资源");
+            tv_name.setText(downloadInfo.getPath().substring(downloadInfo.getPath().lastIndexOf("/")+1, downloadInfo.getPath().length()).replaceAll("\\d+",""));
             break;
           case DownloadInfo.STATUS_PAUSED:
           case DownloadInfo.STATUS_ERROR:
             bt_action.setText("继续");
-            tv_name.setText("暂停");
+            tv_name.setText(downloadInfo.getPath().substring(downloadInfo.getPath().lastIndexOf("/")+1, downloadInfo.getPath().length()).replaceAll("\\d+",""));
             try {
               pb.setProgress((int) (downloadInfo.getProgress() * 100.0 / downloadInfo.getSize()));
             } catch (Exception e) {
@@ -206,7 +211,7 @@ public class DownloadAdapter extends
             }
             tv_size.setText(FileUtil.formatFileSize(downloadInfo.getProgress()) + "/" + FileUtil
                 .formatFileSize(downloadInfo.getSize()));
-            tv_name.setText("正在下载");
+            tv_name.setText(downloadInfo.getPath().substring(downloadInfo.getPath().lastIndexOf("/")+1, downloadInfo.getPath().length()).replaceAll("\\d+",""));
             break;
           case STATUS_COMPLETED:
             bt_action.setText("删除");
@@ -217,7 +222,7 @@ public class DownloadAdapter extends
             }
             tv_size.setText(FileUtil.formatFileSize(downloadInfo.getProgress()) + "/" + FileUtil
                 .formatFileSize(downloadInfo.getSize()));
-            tv_name.setText("成功");
+            tv_name.setText(downloadInfo.getPath().substring(downloadInfo.getPath().lastIndexOf("/")+1, downloadInfo.getPath().length()).replaceAll("\\d+",""));
             Log.i("下载成功",downloadInfo.getPath());
             publishDownloadSuccessStatus();
             break;
@@ -225,13 +230,13 @@ public class DownloadAdapter extends
             tv_size.setText("");
             pb.setProgress(0);
             bt_action.setText("下载");
-            tv_name.setText("没有资源");
+            tv_name.setText(downloadInfo.getPath().substring(downloadInfo.getPath().lastIndexOf("/")+1, downloadInfo.getPath().length()).replaceAll("\\d+",""));
             publishDownloadSuccessStatus();
           case STATUS_WAIT:
             tv_size.setText("");
             pb.setProgress(0);
             bt_action.setText("等待");
-            tv_name.setText("等待");
+            tv_name.setText(downloadInfo.getPath().substring(downloadInfo.getPath().lastIndexOf("/")+1, downloadInfo.getPath().length()).replaceAll("\\d+",""));
             break;
         }
 
