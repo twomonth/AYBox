@@ -3,10 +3,12 @@ package com.aygames.twomonth.aybox.activity;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -71,7 +73,18 @@ public class Activity_Download extends Activity {
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(getApplicationContext(), arrayList.get(i).get("packageName").toString(), Toast.LENGTH_LONG).show();
+                String appPackageName = arrayList.get(i).get("packageName").toString();
+                String appPath = arrayList.get(i).get("apkFileName").toString();
+                try{
+                    Intent intent = packageManager.getLaunchIntentForPackage(appPackageName);
+                    startActivity(intent);
+                }catch(Exception e){
+                    Intent install = new Intent(Intent.ACTION_VIEW);
+                    install.addCategory(Intent.CATEGORY_DEFAULT);
+                    install.setDataAndType(Uri.parse("file://"+appPath), "application/vnd.android.package-archive");
+                    install.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(install);
+                }
             }
         });
         iv_back_download.setOnClickListener(new View.OnClickListener() {
