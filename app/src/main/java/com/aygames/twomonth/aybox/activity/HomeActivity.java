@@ -98,7 +98,7 @@ public class HomeActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         //调用工具类设置Activity颜色
-        StatusBarUtils.setWindowStatusBarColor(this, R.color.colorAccent);
+        StatusBarUtils.setWindowStatusBarColor(this, R.color.colorOrange);
         init();
         SharedPreferences sharedPreferences = getSharedPreferences("advertisment", 0);
         //获取系统日期

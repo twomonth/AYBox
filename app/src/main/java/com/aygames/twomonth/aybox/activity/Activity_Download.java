@@ -44,6 +44,7 @@ import java.util.Map;
 public class Activity_Download extends Activity {
     private FrameLayout fl;
     private GridView gridView;
+    private ImageView iv_back_download;
     //    private List<AppInfo> appInfos = new ArrayList<AppInfo>();
     private File[] apkFilelist;
     PackageManager packageManager;
@@ -63,7 +64,7 @@ public class Activity_Download extends Activity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_download_manager);
         //调用工具类设置Activity颜色
-        StatusBarUtils.setWindowStatusBarColor(this, R.color.colorPrimary);
+        StatusBarUtils.setWindowStatusBarColor(this, R.color.colorOrange);
         initView();
         initData();
         gridView.setAdapter(new DownloadedAdapter(arrayList));
@@ -71,6 +72,12 @@ public class Activity_Download extends Activity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Toast.makeText(getApplicationContext(), arrayList.get(i).get("packageName").toString(), Toast.LENGTH_LONG).show();
+            }
+        });
+        iv_back_download.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
             }
         });
     }
@@ -84,6 +91,7 @@ public class Activity_Download extends Activity {
 
     private void initView() {
         gridView = (GridView) findViewById(R.id.gv_downloaded);
+        iv_back_download = (ImageView) findViewById(R.id.iv_back_download);
         fl = (FrameLayout) findViewById(R.id.fl_downloading);
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         Fragment firstFragment = new DownloadingFragment();
