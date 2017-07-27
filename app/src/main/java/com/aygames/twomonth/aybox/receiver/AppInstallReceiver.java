@@ -21,7 +21,7 @@ public class AppInstallReceiver extends BroadcastReceiver{
             for (int i=0;i<Constans.arrayList.size();i++){
                 String baoming = Constans.arrayList.get(i).get("packageName").toString();
                 if (baoming.equals(packageName)){
-
+                    //kanzheli
                 }
             }
         }
