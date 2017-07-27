@@ -40,6 +40,7 @@ import com.aygames.twomonth.aybox.download.common.DownloadingFragment;
 import com.aygames.twomonth.aybox.download.common.MyDownloadListener;
 import com.aygames.twomonth.aybox.service.FileService;
 import com.aygames.twomonth.aybox.util.Constans;
+import com.aygames.twomonth.aybox.util.GetDataDownLoad;
 import com.aygames.twomonth.aybox.util.GetDateImpl;
 import com.aygames.twomonth.aybox.util.Installation;
 import com.aygames.twomonth.aybox.util.StatusBarUtils;
@@ -196,28 +197,36 @@ public class HomeActivity extends Activity {
     }
 
     private class MyWebViewDownLoadListener implements DownloadListener {
-
+        String gid = null;
         @Override
         public void onDownloadStart(String url, String userAgent, String contentDisposition, String mimetype,
                                     long contentLength) {
-
             File d = new File(Environment.getExternalStorageDirectory().getAbsolutePath(), "AYgames");
             if (!d.exists()) {
                 d.mkdirs();
             }
             int index = url.lastIndexOf("/");
             String game_name = url.substring(index + 1);
+            gid = game_name.substring(0,game_name.indexOf("_"));
             String path = d.getAbsolutePath().concat("/").concat(game_name);
             DownloadInfo downloadInfo = new DownloadInfo.Builder().setUrl(url)
                     .setPath(path)
                     .build();
             AyBoxApplication.downloadManager.download(downloadInfo);
-            downloadInfo.setDownloadListener(new MyDownloadListener(getApplicationContext(),downloadInfo.getPath()) {
+            downloadInfo.setDownloadListener(new MyDownloadListener(getApplicationContext(), downloadInfo.getPath()) {
                 @Override
                 public void onRefresh() {
 
                 }
             });
+            new Thread(){
+                @Override
+                public void run() {
+                    super.run();
+                    GetDataDownLoad.statisticsDownload(gid,1);
+                }
+            }.start();
+
         }
     }
 
@@ -228,8 +237,10 @@ public class HomeActivity extends Activity {
         try {
             // 获取手机串号
             imei = tm.getDeviceId();
+            Constans.iemi = imei;
             if (imei == null) {
                 imei = Installation.id(getApplicationContext());
+                Constans.iemi = imei;
             }
             // 获取电话号码
             user_tel = tm.getLine1Number();
@@ -237,10 +248,12 @@ public class HomeActivity extends Activity {
             e.printStackTrace();
             user_tel = "";
             imei = "";
+            Constans.iemi = imei;
         }
         // 获取操作系统版本
         os_ver = "android" + Build.VERSION.RELEASE;
         agent = GetDateImpl.getChannel(getApplicationContext());
+        Constans.channel = agent;
         PackageManager packageManager = getPackageManager();
         PackageInfo packageInfo = null;
         try {

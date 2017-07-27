@@ -31,6 +31,7 @@ import com.aygames.twomonth.aybox.R;
 import com.aygames.twomonth.aybox.domain.AppInfo;
 import com.aygames.twomonth.aybox.domain.AppInfoService;
 import com.aygames.twomonth.aybox.download.common.DownloadingFragment;
+import com.aygames.twomonth.aybox.util.Constans;
 import com.aygames.twomonth.aybox.util.StatusBarUtils;
 
 import java.io.File;
@@ -149,6 +150,7 @@ public class Activity_Download extends Activity {
                 arrayList.add(hashMap);
             }
         }
+        Constans.arrayList = arrayList;
     }
 
     class DownloadedAdapter extends BaseAdapter {

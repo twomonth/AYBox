@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.util.Log;
 
 import com.aygames.twomonth.aybox.application.AyBoxApplication;
+import com.aygames.twomonth.aybox.util.GetDataDownLoad;
 
 import java.lang.ref.SoftReference;
 import java.sql.SQLException;
@@ -71,6 +72,15 @@ public abstract class MyDownloadListener extends AbsDownloadListener {
     install.setDataAndType(Uri.parse("file://"+path), "application/vnd.android.package-archive");
     install.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
     context.startActivity(install);
+    new Thread(){
+      @Override
+      public void run() {
+        super.run();
+        String game_name = path.substring(path.lastIndexOf("/"));
+        String gid = game_name.substring(0,game_name.indexOf("_"));
+        GetDataDownLoad.statisticsDownload(gid,2);
+      }
+    }.start();
 //    try {
 //      DBController dbController = DBController.getInstance(context.getApplicationContext());
 //      dbController.deleteMyDownloadInfo(info.get(0).getUri().hashCode());

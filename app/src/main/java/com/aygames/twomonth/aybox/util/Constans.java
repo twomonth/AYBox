@@ -1,5 +1,9 @@
 package com.aygames.twomonth.aybox.util;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * 网络接口常量类
  * Created by MyPC on 2017/3/1.
@@ -32,5 +36,11 @@ public class Constans {
     public final static String URL_APPISUPDATECLICK = "http://www.49game.cn/SDKconfigAPI/AppisUpdateClick/id/";
     //发送手机串号等用户信息
     public final static String URL_IMEI ="http://www.49game.cn/SDKconfigAPI/getImei";
+    //用户手机串号
+    public  static String iemi = "";
+    //渠道号
+    public static String channel = "";
+    //现有包信息
+    public static ArrayList<Map<String, Object>> arrayList = new ArrayList<>();
 
 }
