@@ -13,7 +13,7 @@ public class Constans {
     //检测版本更新接口
     public final static String APP_UPDATE="http://www.49game.cn/SDKconfigAPI/AppisUpdate";
     //apk更新接口
-    public final static String APP_DOWNLOAD = "http://192.168.1.110:8080/AYBox.apk";
+    public final static String APP_DOWNLOAD = "http://www.49game.cn/SDKconfigAPI/startApp/";
     //分享订单发送接口
     public final static  String ORDER_SHARE = "http://www.49game.cn/ShareAPI/ShareAdd";
     //推广订单发送接口

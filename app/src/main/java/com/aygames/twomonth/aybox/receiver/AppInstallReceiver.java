@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.util.Log;
 
 import com.aygames.twomonth.aybox.util.Constans;
+import com.aygames.twomonth.aybox.util.GetDataDownLoad;
 
 /**
  * Created by wf05 on 2017/7/27.
@@ -17,13 +18,20 @@ public class AppInstallReceiver extends BroadcastReceiver{
     public void onReceive(Context context, Intent intent) {
         PackageManager manager = context.getPackageManager();
         if (intent.getAction().equals(Intent.ACTION_PACKAGE_ADDED)) {
-            String packageName = intent.getData().getSchemeSpecificPart();
-            for (int i=0;i<Constans.arrayList.size();i++){
-                String baoming = Constans.arrayList.get(i).get("packageName").toString();
-                if (baoming.equals(packageName)){
-                    //kanzheli
+            final String packageName = intent.getData().getSchemeSpecificPart();
+            new Thread(){
+                @Override
+                public void run() {
+                    super.run();
+                    GetDataDownLoad.statisticsDownload(packageName,3);
                 }
-            }
+            }.start();
+//            for (int i=0;i<Constans.arrayList.size();i++){
+//                String baoming = Constans.arrayList.get(i).get("packageName").toString();
+//                if (baoming.equals(packageName)){
+//                    //kanzheli
+//                }
+//            }
         }
         if (intent.getAction().equals(Intent.ACTION_PACKAGE_REMOVED)) {
             String packageName = intent.getData().getSchemeSpecificPart();

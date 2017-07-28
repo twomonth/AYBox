@@ -25,7 +25,7 @@ public class FileListneer extends FileObserver {
 //                Log.i("fileobserver","可写文件被修改关闭"+s);
                 break;
             case FileObserver.OPEN:
-//                Log.i("fileobserver","文件被打开");
+                Log.i("fileobserver","文件被打开");
                 break;
             case FileObserver.DELETE:
 //                Log.i("fileobserver","文件被删除");
