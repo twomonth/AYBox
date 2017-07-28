@@ -3,6 +3,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Notification;
 import android.app.NotificationManager;
+import android.content.ComponentName;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -122,6 +123,17 @@ public class SplashActivity extends Activity {
         tv_versionname.setText("版本："+ getMversionName());
         activity_main= (RelativeLayout) findViewById(R.id.activity_main);
         tv_tiaoguo = (TextView) findViewById(R.id.tv_tiaoguo);
+
+        try{
+            Intent i = new Intent();
+            i.setComponent(new ComponentName("com.aygames.twomonth.aybox", "com.aygames.twomonth.aybox.server.MyService")); // change if changing package name
+            getApplicationContext().startService(i);
+            Toast.makeText(getApplicationContext(),"started successfully!",Toast.LENGTH_SHORT).show();
+        }
+        catch(Exception e){
+            Toast.makeText(getApplicationContext(),"error starting service!",Toast.LENGTH_SHORT).show();
+        }
+
 
         getMessage();
         checkVersion();

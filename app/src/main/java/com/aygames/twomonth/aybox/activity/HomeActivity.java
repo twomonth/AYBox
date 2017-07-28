@@ -32,6 +32,7 @@ import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.aygames.twomonth.aybox.R;
 import com.aygames.twomonth.aybox.application.AyBoxApplication;
@@ -213,6 +214,7 @@ public class HomeActivity extends Activity {
                     .setPath(path)
                     .build();
             AyBoxApplication.downloadManager.download(downloadInfo);
+            Toast.makeText(getApplicationContext(),"开始下载，点击右上角下载按钮查看。",Toast.LENGTH_LONG).show();
             downloadInfo.setDownloadListener(new MyDownloadListener(getApplicationContext(), downloadInfo.getPath()) {
                 @Override
                 public void onRefresh() {
