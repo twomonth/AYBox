@@ -99,6 +99,7 @@ public class HomeActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        Log.v("HomeActivity", "onCreate...");
         //调用工具类设置Activity颜色
         StatusBarUtils.setWindowStatusBarColor(this, R.color.colorOrange);
         init();
@@ -184,7 +185,7 @@ public class HomeActivity extends Activity {
             }
         });
         login();
-        this.startService(new Intent(this, FileService.class));
+//        this.startService(new Intent(this, FileService.class));
     }
 
     //初始化组件
@@ -199,6 +200,7 @@ public class HomeActivity extends Activity {
 
     private class MyWebViewDownLoadListener implements DownloadListener {
         String gid = null;
+
         @Override
         public void onDownloadStart(String url, String userAgent, String contentDisposition, String mimetype,
                                     long contentLength) {
@@ -208,24 +210,24 @@ public class HomeActivity extends Activity {
             }
             int index = url.lastIndexOf("/");
             String game_name = url.substring(index + 1);
-            gid = game_name.substring(0,game_name.indexOf("_"));
+            gid = game_name.substring(0, game_name.indexOf("_"));
             String path = d.getAbsolutePath().concat("/").concat(game_name);
             DownloadInfo downloadInfo = new DownloadInfo.Builder().setUrl(url)
                     .setPath(path)
                     .build();
             AyBoxApplication.downloadManager.download(downloadInfo);
-            Toast.makeText(getApplicationContext(),"开始下载，点击右上角下载按钮查看。",Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "开始下载，点击右上角下载按钮查看。", Toast.LENGTH_LONG).show();
             downloadInfo.setDownloadListener(new MyDownloadListener(getApplicationContext(), downloadInfo.getPath()) {
                 @Override
                 public void onRefresh() {
 
                 }
             });
-            new Thread(){
+            new Thread() {
                 @Override
                 public void run() {
                     super.run();
-                    GetDataDownLoad.statisticsDownload(gid,1);
+                    GetDataDownLoad.statisticsDownload(gid, 1);
                 }
             }.start();
 
@@ -321,5 +323,82 @@ public class HomeActivity extends Activity {
         intent.addCategory(Intent.CATEGORY_HOME);
         startActivity(intent);
         return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+
+    protected void onRestart() {
+
+        // TODO Auto-generated method stub
+
+        super.onRestart();
+        login();
+        Log.v("HomeActivity", "onRestart...");
+
+    }
+
+
+    @Override
+
+    protected void onStart() {
+
+        // TODO Auto-generated method stub
+
+        super.onStart();
+
+        Log.v("HomeActivity", "onStart...");
+
+    }
+
+
+    @Override
+
+    protected void onResume() {
+
+        // TODO Auto-generated method stub
+
+        super.onResume();
+
+        Log.v("HomeActivity", "onResume...");
+
+    }
+
+
+    @Override
+
+    protected void onPause() {
+
+        // TODO Auto-generated method stub
+
+        super.onPause();
+
+        Log.v("HomeActivity", "onPause...");
+
+    }
+
+
+    @Override
+
+    protected void onStop() {
+
+        // TODO Auto-generated method stub
+
+        super.onStop();
+
+        Log.v("HomeActivity", "onStop...");
+
+    }
+
+
+    @Override
+
+    protected void onDestroy() {
+
+        // TODO Auto-generated method stub
+
+        super.onDestroy();
+
+        Log.v("HomeActivity", "onDestroy...");
+
     }
 }

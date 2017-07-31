@@ -1,6 +1,7 @@
 package com.aygames.twomonth.aybox.application;
 
 import android.app.Application;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.util.Log;
 import cn.jpush.android.api.JPushInterface;
@@ -18,6 +19,7 @@ public class AyBoxApplication extends Application {
     public static Bitmap bit_adver = null;
     public static String id_adver=null;
     public static DownloadManager downloadManager;
+    public static Context ctx;
     @Override
     public void onCreate() {
         super.onCreate();
@@ -26,7 +28,7 @@ public class AyBoxApplication extends Application {
         JPushInterface.init(this);
         JMessageClient.setDebugMode(true);
         JMessageClient.init(getApplicationContext(), true);
-
+        ctx = getApplicationContext();
         Config config = new Config();
         //set database path.
         //    config.setDatabaseName("/sdcard/a/d.db");

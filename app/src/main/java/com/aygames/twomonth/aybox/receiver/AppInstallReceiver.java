@@ -10,30 +10,48 @@ import android.util.Log;
 import com.aygames.twomonth.aybox.util.Constans;
 import com.aygames.twomonth.aybox.util.GetDataDownLoad;
 
+import java.util.ArrayList;
+import java.util.Map;
+
 /**
  * Created by wf05 on 2017/7/27.
  */
 
 public class AppInstallReceiver extends BroadcastReceiver{
-    private String gamename;
+    String packageName;
     @Override
     public void onReceive(Context context, final Intent intent) {
         PackageManager manager = context.getPackageManager();
         if (intent.getAction().equals(Intent.ACTION_PACKAGE_ADDED)) {
-            String packageName = intent.getData().getSchemeSpecificPart();
-            try {
-                ApplicationInfo applicationInfo = manager.getApplicationInfo("system",PackageManager.GET_META_DATA);
-                gamename = (String) manager.getApplicationLabel(applicationInfo);
-            } catch (PackageManager.NameNotFoundException e) {
-                e.printStackTrace();
-            }
-            new Thread(){
-                @Override
-                public void run() {
-                    super.run();
-                    GetDataDownLoad.statisticsDownload(gamename,3);
+            Log.i("111","||"+"有程序安装");
+            packageName = intent.getData().getSchemeSpecificPart();
+            ArrayList<Map<String, Object>> arrayList = new ArrayList<>();
+            arrayList = Constans.arrayList;
+            for (int i=0;i<arrayList.size();i++){
+                if (manager.equals(arrayList.get(i).get("packageName"))){
+                    new Thread(){
+                        @Override
+                        public void run() {
+                            super.run();
+                            GetDataDownLoad.statisticsDownload(packageName,3);
+                            Log.i("有程序安装","||"+packageName);
+                        }
+                    }.start();
                 }
-            }.start();
+            }
+//            try {
+//                ApplicationInfo applicationInfo = manager.getApplicationInfo("system",PackageManager.GET_META_DATA);
+//                gamename = (String) manager.getApplicationLabel(applicationInfo);
+//            } catch (PackageManager.NameNotFoundException e) {
+//                e.printStackTrace();
+//            }
+//            new Thread(){
+//                @Override
+//                public void run() {
+//                    super.run();
+//                    GetDataDownLoad.statisticsDownload(gamename,3);
+//                }
+//            }.start();
 //            for (int i=0;i<Constans.arrayList.size();i++){
 //                String baoming = Constans.arrayList.get(i).get("packageName").toString();
 //                if (baoming.equals(packageName)){

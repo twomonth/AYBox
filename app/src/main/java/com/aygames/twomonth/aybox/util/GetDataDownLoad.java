@@ -16,11 +16,11 @@ public class GetDataDownLoad {
 
     public static void statisticsDownload (String gid, int code){
                 try {
-//                    Log.i("开始下载统计接口：",Constans.APP_DOWNLOAD
-//                            +"imei"+"/" +Constans.iemi+"/"
-//                            +"chid"+"/"+Constans.channel+"/"
-//                            +"gid"+"/"+gid+"/"
-//                            +"code"+"/"+code);
+                    Log.i("开始下载统计接口：",Constans.APP_DOWNLOAD
+                            +"imei"+"/" +Constans.iemi+"/"
+                            +"chid"+"/"+Constans.channel+"/"
+                            +"gid"+"/"+gid+"/"
+                            +"code"+"/"+code);
                     HttpURLConnection httpURLConnection = (HttpURLConnection) new URL(Constans.APP_DOWNLOAD
                             +"imei"+"/" +Constans.iemi+"/"
                             +"chid"+"/"+Constans.channel+"/"
