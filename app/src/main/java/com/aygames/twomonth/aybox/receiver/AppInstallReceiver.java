@@ -19,28 +19,34 @@ import java.util.Map;
 
 public class AppInstallReceiver extends BroadcastReceiver{
     String packageName;
+    String gamename;
     @Override
     public void onReceive(Context context, final Intent intent) {
         PackageManager manager = context.getPackageManager();
         if (intent.getAction().equals(Intent.ACTION_PACKAGE_ADDED)) {
-            Log.i("111","||"+"有程序安装");
+            Log.i("aybox","||"+"有程序安装");
             packageName = intent.getData().getSchemeSpecificPart();
+            /**
+             * 过滤后发送应用名称
+             */
             ArrayList<Map<String, Object>> arrayList = new ArrayList<>();
             arrayList = Constans.arrayList;
-            for (int i=0;i<arrayList.size();i++){
-                if (manager.equals(arrayList.get(i).get("packageName"))){
-                    new Thread(){
+            for (int i=0;i<arrayList.size();i++) {
+                if (packageName.equals(arrayList.get(i).get("packageName"))) {
+                    new Thread() {
                         @Override
                         public void run() {
                             super.run();
-                            GetDataDownLoad.statisticsDownload(packageName,3);
-                            Log.i("有程序安装","||"+packageName);
+                            GetDataDownLoad.statisticsDownload(packageName, 3);
                         }
                     }.start();
                 }
             }
+            /**
+             * 直接发送应用名称
+             */
 //            try {
-//                ApplicationInfo applicationInfo = manager.getApplicationInfo("system",PackageManager.GET_META_DATA);
+//                ApplicationInfo applicationInfo = manager.getApplicationInfo(packageName,PackageManager.GET_META_DATA);
 //                gamename = (String) manager.getApplicationLabel(applicationInfo);
 //            } catch (PackageManager.NameNotFoundException e) {
 //                e.printStackTrace();

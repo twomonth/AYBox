@@ -326,79 +326,39 @@ public class HomeActivity extends Activity {
     }
 
     @Override
-
     protected void onRestart() {
-
-        // TODO Auto-generated method stub
-
         super.onRestart();
         login();
         Log.v("HomeActivity", "onRestart...");
-
     }
 
-
     @Override
-
     protected void onStart() {
-
-        // TODO Auto-generated method stub
-
         super.onStart();
-
         Log.v("HomeActivity", "onStart...");
-
     }
 
-
     @Override
-
     protected void onResume() {
-
-        // TODO Auto-generated method stub
-
         super.onResume();
-
         Log.v("HomeActivity", "onResume...");
-
     }
 
-
     @Override
-
     protected void onPause() {
-
-        // TODO Auto-generated method stub
-
         super.onPause();
-
         Log.v("HomeActivity", "onPause...");
-
     }
 
-
     @Override
-
     protected void onStop() {
-
-        // TODO Auto-generated method stub
-
         super.onStop();
-
         Log.v("HomeActivity", "onStop...");
-
     }
 
-
     @Override
-
     protected void onDestroy() {
-
-        // TODO Auto-generated method stub
-
         super.onDestroy();
-
         Log.v("HomeActivity", "onDestroy...");
-
     }
 }

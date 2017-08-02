@@ -1,12 +1,17 @@
 package com.aygames.twomonth.aybox.util;
 
+import android.content.pm.PackageManager;
 import android.util.Log;
+
+import com.aygames.twomonth.aybox.application.AyBoxApplication;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Map;
 
 /**
  * Created by wf05 on 2017/7/27.
@@ -37,5 +42,23 @@ public class GetDataDownLoad {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+    }
+    public static void installOk(final String packageName){
+        PackageManager manager = AyBoxApplication.ctx.getPackageManager();
+        ArrayList<Map<String, Object>> arrayList = new ArrayList<>();
+        arrayList = Constans.arrayList;
+        for (int i=0;i<arrayList.size();i++){
+            Log.i("111","进入循环了");
+            if (packageName.equals(arrayList.get(i).get("packageName"))){
+                new Thread(){
+                    @Override
+                    public void run() {
+                        super.run();
+                        GetDataDownLoad.statisticsDownload(packageName,3);
+                        Log.i("有程序安装","||"+packageName);
+                    }
+                }.start();
+            }
+        }
     }
 }
