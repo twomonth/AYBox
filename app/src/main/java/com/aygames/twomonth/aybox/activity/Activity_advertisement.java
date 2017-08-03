@@ -18,13 +18,16 @@ import android.widget.Toast;
 
 import com.aygames.twomonth.aybox.R;
 import com.aygames.twomonth.aybox.application.AyBoxApplication;
+import com.aygames.twomonth.aybox.download.common.MyDownloadListener;
 import com.aygames.twomonth.aybox.util.Constans;
+import com.aygames.twomonth.aybox.util.GetDataDownLoad;
 import com.aygames.twomonth.aybox.util.GetDateImpl;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
@@ -33,6 +36,8 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 
+import cn.woblog.android.downloader.domain.DownloadInfo;
+
 /**
  * Created by MyPC on 2017/6/20.
  */
@@ -40,6 +45,7 @@ import java.net.URL;
 public class Activity_advertisement extends Activity {
     private WebView webView;
     private String path;
+    private String gid;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,44 +98,32 @@ public class Activity_advertisement extends Activity {
         @Override
         public void onDownloadStart(String url, String userAgent, String contentDisposition, String mimetype,
                                     long contentLength) {
-            Toast.makeText(getApplicationContext(),"正在创建下载任务",Toast.LENGTH_LONG).show();
-            DownloadManager downloadManager;
-            downloadManager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
-            Uri downloadUri = Uri.parse(url);
-            DownloadManager.Request request = new DownloadManager.Request(downloadUri);
-            //request.setNotificationVisibility(View.GONE);
-            //设置文件存放目录
-            //request.setDestinationInExternalFilesDir(getApplicationContext(), Environment.getExternalStorageDirectory().getAbsolutePath(), "");
-            Log.i("下载任务路径", Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath());
+            File d = new File(Environment.getExternalStorageDirectory().getAbsolutePath(), "AYgames");
+            if (!d.exists()) {
+                d.mkdirs();
+            }
             int index = url.lastIndexOf("/");
-            String game_name = url.substring(index+1);
-            // 不同的手机不同Android版本的SD卡的挂载点可能会不一样，因此通过系统方式获取。
-            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).mkdir();
-            request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, game_name);
-            //request.setDestinationInExternalPublicDir(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath(),game_name);
-            request.setDescription(game_name);
-            request.allowScanningByMediaScanner();
-            request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE);
-            // 下载标题
-            request.setTitle(game_name);
-            request.setVisibleInDownloadsUi(true);
-            long id = downloadManager.enqueue(request);
-            // 把当前下载的ID保存起来
-            SharedPreferences sPreferences = getSharedPreferences("downloadplato", 0);
-            sPreferences.edit().putString(id+"",Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath()+"/"+game_name).commit();
-            Log.i("下载任务id",id+"");
-//            downloadManager.enqueue(request);
-            Toast.makeText(getApplicationContext(),"正在下载",Toast.LENGTH_LONG).show();
-            // 文件将存放在外部存储的确实download文件内，如果无此文件夹，创建之，如果有，下面将返回false。
-            // 不同的手机不同Android版本的SD卡的挂载点可能会不一样，因此通过系统方式获取。
-            // Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).mkdir();
-            // request.setDestinationInExternalPublicDir("/download/", game_name);
-            // 下载文件类型
-            // String extension = MimeTypeMap.getFileExtensionFromUrl(url);
-            // String mimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension);
-            // request.setMimeType(mimeType);
-            // 设置UI是否可见
+            String game_name = url.substring(index + 1);
+            gid = game_name.substring(0, game_name.indexOf("_"));
+            String path = d.getAbsolutePath().concat("/").concat(game_name);
+            DownloadInfo downloadInfo = new DownloadInfo.Builder().setUrl(url)
+                    .setPath(path)
+                    .build();
+            AyBoxApplication.downloadManager.download(downloadInfo);
+            Toast.makeText(getApplicationContext(), "开始下载，点击右上角下载按钮查看。", Toast.LENGTH_LONG).show();
+            downloadInfo.setDownloadListener(new MyDownloadListener(getApplicationContext(), downloadInfo.getPath()) {
+                @Override
+                public void onRefresh() {
 
+                }
+            });
+            new Thread() {
+                @Override
+                public void run() {
+                    super.run();
+                    GetDataDownLoad.statisticsDownload(gid, 1);
+                }
+            }.start();
         }
     }
 }

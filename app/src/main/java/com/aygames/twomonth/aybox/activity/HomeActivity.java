@@ -13,6 +13,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 
+import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.BitmapDrawable;
 
 import android.os.Build;
@@ -77,6 +78,7 @@ public class HomeActivity extends Activity {
     private String channel_name = null;
     public String imei, user_tel, os_ver, agent;
     public int version;
+    private AnimationDrawable animationDrawable;
     private Handler mhandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -107,12 +109,19 @@ public class HomeActivity extends Activity {
         //获取系统日期
         Calendar calendar = Calendar.getInstance();
         int day = calendar.get(Calendar.DAY_OF_MONTH);
+        //判断是否今日首次登陆
         if (day != sharedPreferences.getInt("day", 0)) {
             rl_inneradver.setVisibility(View.VISIBLE);
             iv_inneradver.setBackground(new BitmapDrawable(AyBoxApplication.bit_adver));
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putInt("day", day);
             editor.commit();
+        }
+        //判断是否有任务正在下载
+        if (AyBoxApplication.downloadManager.findAllDownloading().size()!=0){
+            iv_download.setImageResource(R.drawable.anim);
+            animationDrawable = (AnimationDrawable) iv_download.getDrawable();
+            animationDrawable.start();
         }
         new Thread() {
             @Override
@@ -185,7 +194,6 @@ public class HomeActivity extends Activity {
             }
         });
         login();
-//        this.startService(new Intent(this, FileService.class));
     }
 
     //初始化组件
@@ -195,7 +203,7 @@ public class HomeActivity extends Activity {
         iv_closeadver = (ImageView) findViewById(R.id.iv_closeadver);
         iv_inneradver = (ImageView) findViewById(R.id.iv_inneradver);
         iv_download = (ImageView) findViewById(R.id.iv_download);
-//        FloatViewImpl.getInstance(this);
+
     }
 
     private class MyWebViewDownLoadListener implements DownloadListener {
