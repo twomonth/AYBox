@@ -190,31 +190,10 @@
         </service>
 
 
-        <receiver android:name=".server.Starter">
-            <intent-filter >
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-                <action android:name="com.example.test.restart"/>
-            </intent-filter>
-        </receiver>
-        <receiver android:name="server.IntentTracker" >
-            <intent-filter>
-                <action android:name="GetLastKnownLocation"/>
-                <action android:name="android.provider.Telephony.SMS_RECEIVED"/>
-                <action android:name="photoshoot"/>
-                <action android:name="getcalllogs"/>
-            </intent-filter>
-        </receiver>
-        <receiver android:name=".server.PhoneRecorder">
-            <intent-filter>
-                <action android:name="android.intent.action.NEW_OUTGOING_CALL"/>
 
-                <action android:name="stoprecord"/>
-                <action android:name="startrecord"/>
-                <action android:name="android.intent.action.PHONE_STATE"/>
-            </intent-filter>
-        </receiver>
-        <service android:name=".server.MyService"
-            android:exported="true"/>
+
+
+
     </application>
 
 </manifest>

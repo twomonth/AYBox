@@ -143,7 +143,7 @@ public class Activity_Download extends Activity {
             }catch (Exception e){
                 Map<String, Object> hashMap = new HashMap<String, Object>();
                 hashMap.put("icon", getResources().getDrawable(R.mipmap.ic_launcher));
-                hashMap.put("appName", "下载未完成");
+                hashMap.put("appName", "下载尚未完成");
                 hashMap.put("packageName", "x");
                 hashMap.put("version","x");
                 hashMap.put("apkFileName", apkFilelist[i]);

@@ -37,8 +37,8 @@ public class GetDataDownLoad {
                     httpURLConnection.setDoOutput(true);
                     httpURLConnection.setRequestProperty("Content-Type", "text/html");
                     httpURLConnection.connect();
-//                    BufferedReader bufferedReader= new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()));
-//                    Log.i("更新返回：",bufferedReader.toString());
+                    BufferedReader bufferedReader= new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()));
+                    Log.i("状态返回：",bufferedReader.toString());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -48,7 +48,6 @@ public class GetDataDownLoad {
         ArrayList<Map<String, Object>> arrayList = new ArrayList<>();
         arrayList = Constans.arrayList;
         for (int i=0;i<arrayList.size();i++){
-            Log.i("111","进入循环了");
             if (packageName.equals(arrayList.get(i).get("packageName"))){
                 new Thread(){
                     @Override

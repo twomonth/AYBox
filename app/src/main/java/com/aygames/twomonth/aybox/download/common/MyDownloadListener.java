@@ -75,8 +75,6 @@ public abstract class MyDownloadListener extends AbsDownloadListener {
 
   @Override
   public void onDownloadSuccess() {
-    List<DownloadInfo> info = AyBoxApplication.downloadManager.findAllDownloaded();
-//    Log.i("ok","onDownloadSuccess");
     Log.i("ok",path+"");
     Intent install = new Intent(Intent.ACTION_VIEW);
     install.addCategory(Intent.CATEGORY_DEFAULT);
@@ -93,19 +91,32 @@ public abstract class MyDownloadListener extends AbsDownloadListener {
         GetDataDownLoad.statisticsDownload(gid,2);
       }
     }.start();
-//    try {
-//      DBController dbController = DBController.getInstance(context.getApplicationContext());
-//      dbController.deleteMyDownloadInfo(info.get(0).getUri().hashCode());
-//    } catch (SQLException e) {
-//      e.printStackTrace();
-//    }
     onRefresh();
   }
 
   @Override
   public void onDownloadFailed(DownloadException e) {
-    Log.i("ok","onDownloadFailed");
-    onRefresh();
+    Log.i("ok","onDownloadFailed"+e.getCode());
+    if (e.getCode()==5){
+//      Log.i("ok",path+"");
+//      Intent install = new Intent(Intent.ACTION_VIEW);
+//      install.addCategory(Intent.CATEGORY_DEFAULT);
+//      install.setDataAndType(Uri.parse("file://"+path), "application/vnd.android.package-archive");
+//      install.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//      context.startActivity(install);
+//      initList();
+//      new Thread(){
+//        @Override
+//        public void run() {
+//          super.run();
+//          String game_name = path.substring(path.lastIndexOf("/"));
+//          String gid = game_name.substring(0,game_name.indexOf("_"));
+//          GetDataDownLoad.statisticsDownload(gid,2);
+//        }
+//      }
+      onDownloadSuccess();
+    }
+//    onRefresh();
   }
 
   @Override
@@ -144,7 +155,7 @@ public abstract class MyDownloadListener extends AbsDownloadListener {
       }catch (Exception e){
         Map<String, Object> hashMap = new HashMap<String, Object>();
         hashMap.put("icon", AyBoxApplication.ctx.getResources().getDrawable(R.mipmap.ic_launcher));
-        hashMap.put("appName", "下载未完成");
+        hashMap.put("appName", "尚未完成");
         hashMap.put("packageName", "x");
         hashMap.put("version","x");
         hashMap.put("apkFileName", apkFilelist[i]);

@@ -37,6 +37,7 @@ import android.widget.Toast;
 
 import com.aygames.twomonth.aybox.R;
 import com.aygames.twomonth.aybox.application.AyBoxApplication;
+import com.aygames.twomonth.aybox.download.common.DBController;
 import com.aygames.twomonth.aybox.download.common.DownloadStatusChanged;
 import com.aygames.twomonth.aybox.download.common.DownloadingFragment;
 import com.aygames.twomonth.aybox.download.common.MyDownloadListener;
@@ -59,10 +60,12 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.Calendar;
 
 import cn.woblog.android.downloader.callback.DownloadManager;
 import cn.woblog.android.downloader.domain.DownloadInfo;
+import cn.woblog.android.downloader.exception.DownloadException;
 
 public class HomeActivity extends Activity {
 
@@ -118,11 +121,11 @@ public class HomeActivity extends Activity {
             editor.commit();
         }
         //判断是否有任务正在下载
-        if (AyBoxApplication.downloadManager.findAllDownloading().size()!=0){
-            iv_download.setImageResource(R.drawable.anim);
-            animationDrawable = (AnimationDrawable) iv_download.getDrawable();
-            animationDrawable.start();
-        }
+//        if (AyBoxApplication.downloadManager.findAllDownloading().size()!=0){
+//            iv_download.setImageResource(R.drawable.anim);
+//            animationDrawable = (AnimationDrawable) iv_download.getDrawable();
+//            animationDrawable.start();
+//        }
         new Thread() {
             @Override
             public void run() {
@@ -220,15 +223,25 @@ public class HomeActivity extends Activity {
             String game_name = url.substring(index + 1);
             gid = game_name.substring(0, game_name.indexOf("_"));
             String path = d.getAbsolutePath().concat("/").concat(game_name);
-            DownloadInfo downloadInfo = new DownloadInfo.Builder().setUrl(url)
+            final DownloadInfo downloadInfo = new DownloadInfo.Builder().setUrl(url)
                     .setPath(path)
                     .build();
             AyBoxApplication.downloadManager.download(downloadInfo);
-            Toast.makeText(getApplicationContext(), "开始下载，点击右上角下载按钮查看。", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "开始下载，点击右上角下载按钮查看", Toast.LENGTH_LONG).show();
             downloadInfo.setDownloadListener(new MyDownloadListener(getApplicationContext(), downloadInfo.getPath()) {
                 @Override
                 public void onRefresh() {
+                }
 
+                @Override
+                public void onDownloadFailed(DownloadException e) {
+                    if (e.getCode() == 5){
+                        try {
+                            DBController.getInstance(getApplicationContext()).deleteMyDownloadInfo(downloadInfo.getUri().hashCode());
+                        } catch (SQLException sql) {
+                            sql.printStackTrace();
+                        }
+                    }
                 }
             });
             new Thread() {
@@ -310,15 +323,6 @@ public class HomeActivity extends Activity {
         }.start();
     }
 
-    //    @Override
-//    public boolean onKeyDown(int keyCode, KeyEvent event) {
-//        moveTaskToBack(false);
-//        Intent intent = new Intent(Intent.ACTION_MAIN);
-//        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//        intent.addCategory(Intent.CATEGORY_HOME);
-//        startActivity(intent);
-//        return super.onKeyDown(keyCode, event);
-//    }
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && webView.canGoBack()) {
