@@ -43,7 +43,7 @@ public class BoxService extends Service {
 
     @Override
     public void onCreate() {
-        Log.i("service服务","888888888");
+        Log.i("service服务","启动");
         super.onCreate();
         initData();
         new Thread(){
