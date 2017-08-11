@@ -110,7 +110,7 @@ public class Activity_advertisement extends Activity {
                     .setPath(path)
                     .build();
             AyBoxApplication.downloadManager.download(downloadInfo);
-            Toast.makeText(getApplicationContext(), "开始下载，点击右上角下载按钮查看。", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "开始下载，点击右上角下载图标查看。", Toast.LENGTH_LONG).show();
             downloadInfo.setDownloadListener(new MyDownloadListener(getApplicationContext(), downloadInfo.getPath()) {
                 @Override
                 public void onRefresh() {
