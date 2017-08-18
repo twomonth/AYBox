@@ -42,5 +42,5 @@ public class Constans {
     public static String channel = "";
     //现有包信息
     public static ArrayList<Map<String, Object>> arrayList = new ArrayList<>();
-
+    //消息推送接口
 }
