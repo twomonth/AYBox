@@ -61,9 +61,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".activity.JpushGG"
-            android:theme="@android:style/Theme.Translucent" />
+
         <activity
             android:name=".activity.Notifi"
             android:label="@string/title_activity_notifi" />
@@ -159,20 +157,7 @@
                 <action android:name="android.intent.action.DOWNLOAD_COMPLETE" />
             </intent-filter>
         </receiver>
-        <receiver
-            android:name=".receiver.TalkReceiver"
-            android:enabled="true">
-            <intent-filter>
-                <action android:name="cn.jpush.android.intent.REGISTRATION" />
-                <action android:name="cn.jpush.android.intent.MESSAGE_RECEIVED" />
-                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED" />
-                <action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED" />
-                <action android:name="cn.jpush.android.intent.NOTIFICATION_CLICK_ACTION" />
-                <action android:name="cn.jpush.android.intent.CONNECTION" />
 
-                <category android:name="com.aygames.twomonth.aybox" />
-            </intent-filter>
-        </receiver>
         <receiver android:name=".receiver.AppInstallReceiver"
             android:label="@string/app_name">
             <intent-filter>
@@ -188,11 +173,6 @@
             android:enabled="true"
             android:exported="true">
         </service>
-
-
-
-
-
 
     </application>
 

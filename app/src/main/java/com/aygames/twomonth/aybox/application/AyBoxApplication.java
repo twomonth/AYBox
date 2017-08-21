@@ -3,9 +3,6 @@ package com.aygames.twomonth.aybox.application;
 import android.app.Application;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.util.Log;
-import cn.jpush.android.api.JPushInterface;
-import cn.jpush.im.android.api.JMessageClient;
 import cn.woblog.android.downloader.DownloadService;
 import cn.woblog.android.downloader.callback.DownloadManager;
 import cn.woblog.android.downloader.config.Config;
@@ -23,11 +20,7 @@ public class AyBoxApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        Log.i("极光推送", "init");
-        JPushInterface.setDebugMode(true);
-        JPushInterface.init(this);
-        JMessageClient.setDebugMode(true);
-        JMessageClient.init(getApplicationContext(), true);
+
         ctx = getApplicationContext();
         Config config = new Config();
         //set database path.
