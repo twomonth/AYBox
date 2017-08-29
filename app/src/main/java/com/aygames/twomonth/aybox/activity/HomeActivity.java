@@ -42,6 +42,7 @@ import com.aygames.twomonth.aybox.download.common.DownloadStatusChanged;
 import com.aygames.twomonth.aybox.download.common.DownloadingFragment;
 import com.aygames.twomonth.aybox.download.common.MyDownloadListener;
 import com.aygames.twomonth.aybox.service.FileService;
+import com.aygames.twomonth.aybox.service.Service1;
 import com.aygames.twomonth.aybox.util.Constans;
 import com.aygames.twomonth.aybox.util.GetDataDownLoad;
 import com.aygames.twomonth.aybox.util.GetDateImpl;
@@ -120,6 +121,7 @@ public class HomeActivity extends Activity {
             editor.putInt("day", day);
             editor.commit();
         }
+        startService(new Intent(this, Service1.class));
         //判断是否有任务正在下载
 //        if (AyBoxApplication.downloadManager.findAllDownloading().size()!=0){
 //            iv_download.setImageResource(R.drawable.anim);

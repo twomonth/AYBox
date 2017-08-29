@@ -27,6 +27,9 @@ public class HiddenWaiter extends BroadcastReceiver {
 
             case "android.intent.action.SCREEN_ON":
                 Log.i("test", "屏幕开启");
+                Intent intent2 = new Intent();
+                intent2.setClass(context, ServiceForMessage.class);
+                context.startService(intent2);
                 break;
 
             default:

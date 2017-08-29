@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:background="@color/colorBlack_ban"
     android:layout_height="70dp">
     <ImageView
         android:id="@+id/ib_delete"
@@ -12,7 +13,7 @@
     <ProgressBar
         android:id="@+id/progressbar"
         android:layout_width="match_parent"
-        android:layout_height="3dp"
+        android:layout_height="6dp"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_centerInParent="true"
         android:layout_toRightOf="@+id/ib_delete"
@@ -23,7 +24,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/colorBlack"
-        android:layout_below="@+id/progressbar"
+        android:layout_above="@+id/progressbar"
         android:layout_alignLeft="@+id/progressbar"/>
     <TextView
         android:id="@+id/tv_jindu"
@@ -33,12 +34,13 @@
         android:textColor="@color/colorBlack"
         android:layout_toLeftOf="@+id/bt_download"
         android:layout_marginRight="10dp"
-        android:layout_below="@+id/progressbar"
-        android:layout_alignBottom="@+id/tv_name" />
+        android:layout_above="@+id/progressbar"
+        android:layout_alignParentRight="true"
+         />
     <Button
         android:id="@+id/bt_download"
         android:layout_width="50dp"
-        android:layout_height="35dp"
+        android:layout_height="30dp"
         android:textSize="10dp"
         android:layout_alignParentBottom="true"
         android:layout_alignRight="@+id/progressbar"

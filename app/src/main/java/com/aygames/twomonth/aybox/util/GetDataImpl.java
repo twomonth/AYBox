@@ -3,7 +3,7 @@ package com.aygames.twomonth.aybox.util;
 import android.content.Context;
 import android.util.Log;
 
-import com.qiniu.android.jpush.http.ByteArrayEntity;
+
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -11,6 +11,7 @@ import org.apache.http.HttpStatus;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.ByteArrayEntity;
 import org.json.JSONException;
 import org.json.JSONObject;
 
