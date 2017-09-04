@@ -12,12 +12,27 @@ import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import com.aygames.twomonth.aybox.R;
 import com.aygames.twomonth.aybox.activity.HomeActivity;
+import com.aygames.twomonth.aybox.util.Constans;
+import com.aygames.twomonth.aybox.util.StreamUtil;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.Map;
 
 /**
  * Created by wf05 on 2017/8/18.
  */
 
 public class ServiceForMessage extends Service {
+    private String title,message,id,link;
 
     @Nullable
     @Override
@@ -40,6 +55,7 @@ public class ServiceForMessage extends Service {
             editor.putLong("lasttime",time_now);
             editor.commit();
             //从后台获取推送信息
+            getMessage();
             //获取PendingIntent
             Intent mainIntent = new Intent(this, HomeActivity.class);
             PendingIntent mainPendingIntent = PendingIntent.getActivity(this, 0, mainIntent, PendingIntent.FLAG_UPDATE_CURRENT);
@@ -58,6 +74,33 @@ public class ServiceForMessage extends Service {
             stopService(intent);
         }
 
+    }
+
+    private void getMessage() {
+        new Thread(){
+            @Override
+            public void run() {
+                try {
+                    Log.i("消息推送：", Constans.URL_MESSAGE);
+                    HttpURLConnection httpURLConnection = (HttpURLConnection) new URL(Constans.URL_MESSAGE).openConnection();
+                    httpURLConnection.setRequestMethod("GET");
+                    httpURLConnection.setReadTimeout(5000);
+                    httpURLConnection.setConnectTimeout(5000);
+                    httpURLConnection.connect();
+                    if (httpURLConnection.getResponseCode()==200){
+                        InputStream is = httpURLConnection.getInputStream();
+                        String string = StreamUtil.stream2string(is);
+                        JSONObject jsonObject = new JSONObject(string);
+                        JSONObject jsonObject1 = jsonObject.getJSONObject("data");
+                        Log.i("xiaoxi",jsonObject1.toString());
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
     }
 
     @Override
