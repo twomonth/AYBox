@@ -31,7 +31,7 @@ public class JpushGG extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_guanggao);
-        String url = getIntent().getStringExtra("url");
+        String url = getIntent().getStringExtra("link");
         webView = (WebView) findViewById(webview_jpush);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.setDownloadListener(new MyWebViewDownLoadListener());

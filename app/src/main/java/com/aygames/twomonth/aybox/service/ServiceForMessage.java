@@ -12,6 +12,7 @@ import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import com.aygames.twomonth.aybox.R;
 import com.aygames.twomonth.aybox.activity.HomeActivity;
+import com.aygames.twomonth.aybox.activity.JpushGG;
 import com.aygames.twomonth.aybox.util.Constans;
 import com.aygames.twomonth.aybox.util.StreamUtil;
 
@@ -32,7 +33,7 @@ import java.util.Map;
  */
 
 public class ServiceForMessage extends Service {
-    private String title,message,id,link;
+    private String title,ccontent,id,link;
 
     @Nullable
     @Override
@@ -56,24 +57,37 @@ public class ServiceForMessage extends Service {
             editor.commit();
             //从后台获取推送信息
             getMessage();
-            //获取PendingIntent
-            Intent mainIntent = new Intent(this, HomeActivity.class);
-            PendingIntent mainPendingIntent = PendingIntent.getActivity(this, 0, mainIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-            NotificationManager notifyManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-            //创建 Notification.Builder 对象
-            NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
-                    .setSmallIcon(R.mipmap.hezi)
-                    //点击通知后自动清除
-                    .setAutoCancel(true)
-                    .setContentTitle("我是带Action的Notification")
-                    .setContentText("点我会打开MainActivity")
-                    .setContentIntent(mainPendingIntent);
-            //发送通知
-            notifyManager.notify(1, builder.build());
-            Intent intent = new Intent(this,ServiceForMessage.class);
-            stopService(intent);
+            //本地文件比较
+            if (sharedPreferences.getString("id",null).equals(id)){
+                stopService(new Intent(this,ServiceForMessage.class));
+                Log.i("ServiceForMessage","关闭");
+            }else {
+                showNotifi();
+                editor.putString("id",id);
+                editor.commit();
+                Intent intent = new Intent(this,ServiceForMessage.class);
+                stopService(intent);
+            }
         }
 
+    }
+
+    private void showNotifi() {
+        //获取PendingIntent
+        Intent mainIntent = new Intent(this, JpushGG.class);
+        mainIntent.putExtra("link",link);
+        PendingIntent mainPendingIntent = PendingIntent.getActivity(this, 0, mainIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        NotificationManager notifyManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        //创建 Notification.Builder 对象
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
+                .setSmallIcon(R.mipmap.hezi)
+                //点击通知后自动清除
+                .setAutoCancel(true)
+                .setContentTitle(title)
+                .setContentText(ccontent)
+                .setContentIntent(mainPendingIntent);
+        //发送通知
+        notifyManager.notify(1, builder.build());
     }
 
     private void getMessage() {
@@ -92,7 +106,11 @@ public class ServiceForMessage extends Service {
                         String string = StreamUtil.stream2string(is);
                         JSONObject jsonObject = new JSONObject(string);
                         JSONObject jsonObject1 = jsonObject.getJSONObject("data");
-                        Log.i("xiaoxi",jsonObject1.toString());
+                        id = jsonObject1.getString("id");
+                        ccontent = jsonObject1.getString("content");
+                        title = jsonObject1.getString("title");
+                        link = jsonObject1.getString("link");
+                        Log.i("message",id+","+ccontent+","+title+","+link);
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
