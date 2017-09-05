@@ -44,8 +44,8 @@ public class ServiceForMessage extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        SharedPreferences sharedPreferences = getSharedPreferences("message",MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
+        final SharedPreferences sharedPreferences = getSharedPreferences("message",MODE_PRIVATE);
+        final SharedPreferences.Editor editor = sharedPreferences.edit();
         Log.i("message","消息推送接收启动");
         Log.i("message", System.currentTimeMillis()+"");
         Long time_now = System.currentTimeMillis();
@@ -57,17 +57,29 @@ public class ServiceForMessage extends Service {
             editor.commit();
             //从后台获取推送信息
             getMessage();
-            //本地文件比较
-            if (sharedPreferences.getString("id",null).equals(id)){
-                stopService(new Intent(this,ServiceForMessage.class));
-                Log.i("ServiceForMessage","关闭");
-            }else {
-                showNotifi();
-                editor.putString("id",id);
-                editor.commit();
-                Intent intent = new Intent(this,ServiceForMessage.class);
-                stopService(intent);
-            }
+            new Thread(){
+                @Override
+                public void run() {
+                    try {
+                        sleep(2000);
+                        //本地文件比较
+                        if (sharedPreferences.getString("id","0").equals(id)){
+                            stopService(new Intent(getApplicationContext(),ServiceForMessage.class));
+                            Log.i("ServiceForMessage","关闭");
+                        }else {
+                            showNotifi();
+                            editor.putString("id",id);
+                            Log.i("id",id);
+                            editor.commit();
+                            Intent intent = new Intent(getApplicationContext(),ServiceForMessage.class);
+                            stopService(intent);
+                        }
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }.start();
+
         }
 
     }
@@ -76,6 +88,7 @@ public class ServiceForMessage extends Service {
         //获取PendingIntent
         Intent mainIntent = new Intent(this, JpushGG.class);
         mainIntent.putExtra("link",link);
+        mainIntent.putExtra("id",id);
         PendingIntent mainPendingIntent = PendingIntent.getActivity(this, 0, mainIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         NotificationManager notifyManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         //创建 Notification.Builder 对象
@@ -88,6 +101,29 @@ public class ServiceForMessage extends Service {
                 .setContentIntent(mainPendingIntent);
         //发送通知
         notifyManager.notify(1, builder.build());
+        //展示数量+1
+        showMessage();
+    }
+
+    private void showMessage() {
+        new Thread(){
+            @Override
+            public void run() {
+                try{
+                    HttpURLConnection httpURLConnection = (HttpURLConnection) new URL(Constans.APP_DOWNLOAD
+                            +id).openConnection();
+                    httpURLConnection.setRequestMethod("GET");
+                    httpURLConnection.setDoInput(true);
+                    httpURLConnection.setDoOutput(true);
+                    httpURLConnection.setRequestProperty("Content-Type", "text/html");
+                    httpURLConnection.connect();
+                    BufferedReader bufferedReader= new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()));
+                    Log.i("状态返回：",bufferedReader.toString());
+                }catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
     }
 
     private void getMessage() {
@@ -106,11 +142,13 @@ public class ServiceForMessage extends Service {
                         String string = StreamUtil.stream2string(is);
                         JSONObject jsonObject = new JSONObject(string);
                         JSONObject jsonObject1 = jsonObject.getJSONObject("data");
+                        Log.i("data",jsonObject1.toString());
                         id = jsonObject1.getString("id");
                         ccontent = jsonObject1.getString("content");
                         title = jsonObject1.getString("title");
-                        link = jsonObject1.getString("link");
+                        link = jsonObject1.getString("url");
                         Log.i("message",id+","+ccontent+","+title+","+link);
+
                     }
                 } catch (IOException e) {
                     e.printStackTrace();

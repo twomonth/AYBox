@@ -92,6 +92,11 @@
         <activity
             android:name=".activity.Activity_advertisement"
             android:theme="@android:style/Theme.Translucent" />
+        <activity android:name=".activity.JpushGG"
+            android:launchMode="singleTask"
+            android:taskAffinity=""
+            android:excludeFromRecents="true">
+        </activity>
 
         <!-- shareSDK 需要用的acitvity -->
         <activity
@@ -144,11 +149,7 @@
             android:name=".activity.HomeActivity"
             android:label="@string/title_activity_home"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".manager.AppManager">
-            <intent-filter>
-                <action android:name="startAppManager" />
-            </intent-filter>
-        </activity>
+
 
         <service android:name=".service.BoxService" />
 
