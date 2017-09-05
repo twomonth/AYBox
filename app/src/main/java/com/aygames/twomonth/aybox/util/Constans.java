@@ -44,4 +44,6 @@ public class Constans {
     public static ArrayList<Map<String, Object>> arrayList = new ArrayList<>();
     //消息推送接口
     public static String URL_MESSAGE = "http://www.49game.cn/SDKconfigAPI/MessageApi";
+    //消息推送统计接口
+    public static String URL_MESSAGE_TONGJI = "http://www.49game.cn/SDKconfigAPI/SDgetdata/";
 }

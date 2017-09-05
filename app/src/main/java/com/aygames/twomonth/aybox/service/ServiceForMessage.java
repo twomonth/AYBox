@@ -110,8 +110,8 @@ public class ServiceForMessage extends Service {
             @Override
             public void run() {
                 try{
-                    HttpURLConnection httpURLConnection = (HttpURLConnection) new URL(Constans.APP_DOWNLOAD
-                            +id).openConnection();
+                    HttpURLConnection httpURLConnection = (HttpURLConnection) new URL(Constans.URL_MESSAGE_TONGJI
+                            +"id"+"/"+id+"/"+"action"+"/"+1).openConnection();
                     httpURLConnection.setRequestMethod("GET");
                     httpURLConnection.setDoInput(true);
                     httpURLConnection.setDoOutput(true);

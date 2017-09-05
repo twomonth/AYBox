@@ -16,6 +16,7 @@ import android.content.pm.PackageManager;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.BitmapDrawable;
 
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.app.Activity;
@@ -93,8 +94,13 @@ public class HomeActivity extends Activity {
             webView.setWebViewClient(new WebViewClient() {
                 @Override
                 public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                    // TODO Auto-generated method stub
-                    return super.shouldOverrideUrlLoading(view, "http://" + path + channel_name);//"http://"+path+channel_name
+                    if (url.startsWith("http")||url.startsWith("https")){
+                        return super.shouldOverrideUrlLoading(view, "http://" + path + channel_name);//"http://"+path+channel_name
+                    }else {
+                        Intent intent = new Intent(Intent.ACTION_VIEW , Uri.parse(url));
+                        startActivity(intent);
+                        return true;
+                    }
                 }
             });
         }
