@@ -63,8 +63,8 @@ public class Service2 extends Service {
     @SuppressLint("NewApi")
     public void onCreate() {
 
-        Toast.makeText(Service2.this, "Service2 启动中...", Toast.LENGTH_SHORT)
-                .show();
+//        Toast.makeText(Service2.this, "Service2 启动中...", Toast.LENGTH_SHORT)
+//                .show();
         startService1();
         /*
 		 * 此线程用监听Service2的状态
@@ -73,7 +73,7 @@ public class Service2 extends Service {
             public void run() {
                 while (true) {
                     boolean isRun = Utils.isServiceWork(Service2.this,
-                            "com.example.twomonth.strongservice.Service1");
+                            "com.aygames.twomonth.aybox.service.Service1");
                     if (!isRun) {
                         Message msg = Message.obtain();
                         msg.what = 1;
@@ -96,7 +96,7 @@ public class Service2 extends Service {
      */
     private void startService1() {
         boolean isRun = Utils.isServiceWork(Service2.this,
-                "com.example.twomonth.strongservice.Service1");
+                "com.aygames.twomonth.aybox.service.Service1");
         if (isRun == false) {
             try {
                 startS1.startService();

@@ -54,7 +54,7 @@ public class JpushGG extends Activity {
         webView.getSettings().setJavaScriptEnabled(true);
         webView.setDownloadListener(new MyWebViewDownLoadListener());
         webView.loadUrl(url);
-        Log.i("极光推送wap页面网址","http://"+ url);
+        Log.i("消息推送wap页面网址","http://"+ url);
         webView.setWebViewClient(new WebViewClient(){
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {

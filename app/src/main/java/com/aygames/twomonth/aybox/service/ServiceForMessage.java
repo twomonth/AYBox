@@ -1,5 +1,6 @@
 package com.aygames.twomonth.aybox.service;
 
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
@@ -50,7 +51,7 @@ public class ServiceForMessage extends Service {
         Log.i("message", System.currentTimeMillis()+"");
         Long time_now = System.currentTimeMillis();
         Long time_get = sharedPreferences.getLong("lasttime",0);
-        if (time_now-time_get>1000){
+        if (time_now-time_get>1800000){
             Log.i("time_get",time_get.toString());
             Log.i("time_now",time_now.toString());
             editor.putLong("lasttime",time_now);
@@ -98,6 +99,7 @@ public class ServiceForMessage extends Service {
                 .setAutoCancel(true)
                 .setContentTitle(title)
                 .setContentText(ccontent)
+                .setDefaults(Notification.DEFAULT_ALL)
                 .setContentIntent(mainPendingIntent);
         //发送通知
         notifyManager.notify(1, builder.build());

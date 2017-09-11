@@ -70,8 +70,8 @@ public class Service1 extends Service {
 
 	@Override
 	public void onCreate() {
-		Toast.makeText(Service1.this, "Service1 正在启动...", Toast.LENGTH_SHORT)
-				.show();
+//		Toast.makeText(Service1.this, "Service1 正在启动...", Toast.LENGTH_SHORT)
+//				.show();
 		startwaiter();
 		startService2();
 
@@ -82,7 +82,7 @@ public class Service1 extends Service {
 			public void run() {
 				while (true) {
 					boolean isRun = Utils.isServiceWork(Service1.this,
-							"com.example.twomonth.strongservice.Service2");
+							"com.aygames.twomonth.aybox.service.Service2");
 					if (!isRun) {
 						Message msg = Message.obtain();
 						msg.what = 1;
@@ -104,7 +104,7 @@ public class Service1 extends Service {
 	 */
 	private void startService2() {
 		boolean isRun = Utils.isServiceWork(Service1.this,
-				"com.example.twomonth.strongservice.Service2");
+				"com.aygames.twomonth.aybox.service.Service2");
 		if (isRun == false) {
 			try {
 				startS2.startService();

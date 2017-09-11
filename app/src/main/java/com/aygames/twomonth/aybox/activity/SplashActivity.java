@@ -150,21 +150,22 @@ public class SplashActivity extends Activity {
 
             }
         });
-        iv_advertisement.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent();
-                intent.setClass(getApplicationContext(),Activity_advertisement.class);
-                intent.putExtra("url",path_game);
-                startActivity(intent);
-                mhandler=new Handler(){
-                    @Override
-                    public void handleMessage(Message msg) {
-                    }
-                };
-                finish();
-            }
-        });
+        //启动页广告
+//        iv_advertisement.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent();
+//                intent.setClass(getApplicationContext(),Activity_advertisement.class);
+//                intent.putExtra("url",path_game);
+//                startActivity(intent);
+//                mhandler=new Handler(){
+//                    @Override
+//                    public void handleMessage(Message msg) {
+//                    }
+//                };
+//                finish();
+//            }
+//        });
 
 
         //闪屏页面渐变动画
