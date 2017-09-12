@@ -33,12 +33,14 @@ import com.aygames.twomonth.aybox.domain.AppInfoService;
 import com.aygames.twomonth.aybox.download.common.DownloadingFragment;
 import com.aygames.twomonth.aybox.util.Constans;
 import com.aygames.twomonth.aybox.util.StatusBarUtils;
+import com.bumptech.glide.load.engine.Resource;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * Created by twomonth on 2017/6/13.
@@ -117,38 +119,48 @@ public class Activity_Download extends Activity {
         File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath(), "AYgames");
         apkFilelist = file.listFiles();
         packageManager = this.getPackageManager();
-        for (int i = 0; i < apkFilelist.length; i++) {
-            PackageInfo packageInfo = null;
-            String appName = null;
-            String packageName = null;
-            String version = null;
-            Drawable icon1 = null;
-            try {
-                packageInfo = packageManager.getPackageArchiveInfo(apkFilelist[i].getPath(), PackageManager.GET_ACTIVITIES);
-                ApplicationInfo appInfo = packageInfo.applicationInfo;
+        if (apkFilelist!=null){
+            for (int i = 0; i < apkFilelist.length; i++) {
+                PackageInfo packageInfo = null;
+                String appName = null;
+                String packageName = null;
+                String version = null;
+                Drawable icon1 = null;
+                try {
+                    packageInfo = packageManager.getPackageArchiveInfo(apkFilelist[i].getPath(), PackageManager.GET_ACTIVITIES);
+                    ApplicationInfo appInfo = packageInfo.applicationInfo;
                 /* 必须加这两句，不然下面icon获取是default icon而不是应用包的icon */
-                appInfo.sourceDir = apkFilelist[i].getPath();
-                appInfo.publicSourceDir = apkFilelist[i].getPath();
-                appName = packageManager.getApplicationLabel(appInfo).toString();// 得到应用名
-                packageName = appInfo.packageName; // 得到包名
-                version = packageInfo.versionName; // 得到版本信息
-                icon1 = packageManager.getApplicationIcon(appInfo);// 得到图标信息
-                Map<String, Object> hashMap = new HashMap<String, Object>();
-                hashMap.put("icon", icon1);
-                hashMap.put("appName", appName);
-                hashMap.put("packageName", packageName);
-                hashMap.put("version", version);
-                hashMap.put("apkFileName", apkFilelist[i]);
-                arrayList.add(hashMap);
-            }catch (Exception e){
-                Map<String, Object> hashMap = new HashMap<String, Object>();
-                hashMap.put("icon", getResources().getDrawable(R.mipmap.ic_launcher));
-                hashMap.put("appName", "下载尚未完成");
-                hashMap.put("packageName", "x");
-                hashMap.put("version","x");
-                hashMap.put("apkFileName", apkFilelist[i]);
-                arrayList.add(hashMap);
+                    appInfo.sourceDir = apkFilelist[i].getPath();
+                    appInfo.publicSourceDir = apkFilelist[i].getPath();
+                    appName = packageManager.getApplicationLabel(appInfo).toString();// 得到应用名
+                    packageName = appInfo.packageName; // 得到包名
+                    version = packageInfo.versionName; // 得到版本信息
+                    icon1 = packageManager.getApplicationIcon(appInfo);// 得到图标信息
+                    Map<String, Object> hashMap = new HashMap<String, Object>();
+                    hashMap.put("icon", icon1);
+                    hashMap.put("appName", appName);
+                    hashMap.put("packageName", packageName);
+                    hashMap.put("version", version);
+                    hashMap.put("apkFileName", apkFilelist[i]);
+                    arrayList.add(hashMap);
+                }catch (Exception e){
+                    Map<String, Object> hashMap = new HashMap<String, Object>();
+                    hashMap.put("icon", getResources().getDrawable(R.mipmap.ic_launcher));
+                    hashMap.put("appName", "下载尚未完成");
+                    hashMap.put("packageName", "x");
+                    hashMap.put("version","x");
+                    hashMap.put("apkFileName", apkFilelist[i]);
+                    arrayList.add(hashMap);
+                }
             }
+        }else{
+            Map<String,Object> hashMap = new HashMap<>();
+            hashMap.put("icon", getResources().getDrawable(R.mipmap.hezi));
+            hashMap.put("appName", "福利盒子");
+            hashMap.put("packageName", "com.aygames.twomonth.aybox");
+            hashMap.put("version", "2.2");
+            hashMap.put("apkFileName", "fulihezi");
+            arrayList.add(hashMap);
         }
         Constans.arrayList = arrayList;
     }
@@ -162,7 +174,7 @@ public class Activity_Download extends Activity {
 
         @Override
         public int getCount() {
-            return apkFilelist.length;
+            return arrayList.size();
         }
 
         @Override
