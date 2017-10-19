@@ -31,7 +31,9 @@ import android.widget.Toast;
 import com.aygames.twomonth.aybox.R;
 import com.aygames.twomonth.aybox.application.AyBoxApplication;
 import com.aygames.twomonth.aybox.util.Constans;
+import com.aygames.twomonth.aybox.util.GetDateImpl;
 import com.aygames.twomonth.aybox.util.StreamUtil;
+import com.aygames.twomonth.aybox.util.Utils;
 import com.lidroid.xutils.BitmapUtils;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.ViewUtils;
@@ -191,7 +193,7 @@ public class SplashActivity extends Activity {
                     //读取超时
                     connection.setReadTimeout(2000);
                     //连接
-                     connection.connect();
+                    connection.connect();
                     int responseCode = connection.getResponseCode();
                     if (responseCode == 200){
                         InputStream in = connection.getInputStream();
@@ -204,6 +206,9 @@ public class SplashActivity extends Activity {
                         mversionCode=json.getInt("versioncode");
                         mdes=json.getString("des");
                         murl=json.getString("url");
+                        if(murl == null){
+                            murl="http://download.symi.cn/Public/subpackage/box/box_"+ GetDateImpl.getChannel(getApplicationContext())+"_game.apk";
+                        }
                         box_id = json.getString("id");
                         Log.v("tag",mversionName+mversionCode+mdes+murl);
                         if (getVersionCode()<mversionCode){
@@ -322,21 +327,21 @@ public class SplashActivity extends Activity {
     /**
      * 启动通知
      */
-    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
-    private Notification startNotify(){
-
-        notificationManager= (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        Notification notification = new Notification.Builder(this)
-                .setAutoCancel(true)
-                .setTicker("AY最新消息！！！")
-                .setSmallIcon(R.mipmap.hezi)
-                .setContentTitle("游戏开服了！！！")
-                .setContentText("傲视遮天，最新开服列表")
-                .setDefaults(Notification.DEFAULT_ALL)
-                .setWhen(System.currentTimeMillis()).build();
-        return notification;
-
-    }
+//    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+//    private Notification startNotify(){
+//
+//        notificationManager= (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+//        Notification notification = new Notification.Builder(this)
+//                .setAutoCancel(true)
+//                .setTicker("AY最新消息！！！")
+//                .setSmallIcon(R.mipmap.hezi)
+//                .setContentTitle("游戏开服了！！！")
+//                .setContentText("傲视遮天，最新开服列表")
+//                .setDefaults(Notification.DEFAULT_ALL)
+//                .setWhen(System.currentTimeMillis()).build();
+//        return notification;
+//
+//    }
     /**
      * 下载安装包
      */
@@ -361,32 +366,32 @@ public class SplashActivity extends Activity {
                 }
             }
         }.start();
-            String path= Environment.getExternalStorageDirectory().getAbsolutePath()+"/AYBox.apk";
-            HttpUtils utils = new HttpUtils();
-            Log.v("tag","utils创建了额");
-            utils.download(murl, path, new RequestCallBack<File>() {
-                @Override
-                public void onLoading(long total, long current, boolean isUploading) {
-                    super.onLoading(total, current, isUploading);
-                    //下载进度
-                }
+        String path= Environment.getExternalStorageDirectory().getAbsolutePath()+"/AYBox.apk";
+        HttpUtils utils = new HttpUtils();
+        Log.v("tag","utils创建了额");
+        utils.download(murl, path, new RequestCallBack<File>() {
+            @Override
+            public void onLoading(long total, long current, boolean isUploading) {
+                super.onLoading(total, current, isUploading);
+                //下载进度
+            }
 
-                @Override
-                public void onSuccess(ResponseInfo<File> responseInfo) {
-                    //下载成功
-                    // 跳转系统安装页面
-                    Intent intent = new Intent();
-                    intent.setAction(Intent.ACTION_VIEW);
-                    intent.addCategory(Intent.CATEGORY_DEFAULT);
-                    intent.setDataAndType(Uri.fromFile(responseInfo.result),"application/vnd.android.package-archive");
-                    startActivityForResult(intent, 0);
-                }
+            @Override
+            public void onSuccess(ResponseInfo<File> responseInfo) {
+                //下载成功
+                // 跳转系统安装页面
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_VIEW);
+                intent.addCategory(Intent.CATEGORY_DEFAULT);
+                intent.setDataAndType(Uri.fromFile(responseInfo.result),"application/vnd.android.package-archive");
+                startActivityForResult(intent, 0);
+            }
 
-                @Override
-                public void onFailure(HttpException e, String s) {
-                    Log.v("tag",s);
-                }
-            });
+            @Override
+            public void onFailure(HttpException e, String s) {
+                Log.v("tag",s);
+            }
+        });
     }
 
     //用户取消安装按钮监听

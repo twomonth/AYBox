@@ -2,11 +2,25 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        android:background="@color/back_Black">
+        <TextView
+            android:id="@+id/lblq_back"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="返回"
+            android:textSize="25dp"
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/colorOrange1"
+            android:gravity="center_vertical"/>
+
+    </LinearLayout>
     <WebView
         android:id="@+id/webview_libao"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
     </WebView>
-
 </LinearLayout>
