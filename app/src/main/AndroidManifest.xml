@@ -97,6 +97,10 @@
             android:taskAffinity=""
             android:excludeFromRecents="true">
         </activity>
+        <!--礼包领取页面-->
+        <activity
+            android:name=".activity.LibaoActivity"
+            android:exported="true"/>
 
         <!-- shareSDK 需要用的acitvity -->
         <activity
@@ -107,9 +111,7 @@
             android:windowSoftInputMode="stateHidden|adjustResize">
             <intent-filter>
                 <data android:scheme="tencent1106103938" />
-
                 <action android:name="android.intent.action.VIEW" />
-
                 <category android:name="android.intent.category.BROWSABLE" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
@@ -124,9 +126,7 @@
             <!-- 集成line客户端登录授权，需要添如下格式的过滤器 -->
             <intent-filter>
                 <data android:scheme="line.1477692153" />
-
                 <action android:name="android.intent.action.VIEW" />
-
                 <category android:name="android.intent.category.BROWSABLE" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>

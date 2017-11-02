@@ -1,12 +1,9 @@
 package com.aygames.twomonth.aybox.activity;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -21,16 +18,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.aygames.twomonth.aybox.R;
 import com.aygames.twomonth.aybox.util.Constans;
-import com.lidroid.xutils.HttpUtils;
-import com.lidroid.xutils.exception.HttpException;
-import com.lidroid.xutils.http.RequestParams;
-import com.lidroid.xutils.http.ResponseInfo;
-import com.lidroid.xutils.http.callback.RequestCallBack;
-import com.lidroid.xutils.http.client.HttpRequest;
+import com.aygames.twomonth.aybox.util.GetDataImpl;
+import com.aygames.twomonth.aybox.util.GetDateImpl;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -42,7 +34,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Random;
-
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.PlatformActionListener;
 import cn.sharesdk.framework.ShareSDK;
@@ -54,18 +45,18 @@ import cn.sharesdk.wechat.moments.WechatMoments;
 
 /**
  * Created by MyPC on 2017/3/23.
+ * list: 0=gid,1=username,2=heroid,3=heroname,4=herorank
  */
 
 public class FenxiangActivity extends Activity implements View.OnClickListener{
 
     private final static int SHARE_OK=1;
-    private String gameid;
+    private String gameid,title,imageurl,gameurl,text;
     private Button bt_weicheat,bt_pengyouquan,bt_qq,bt_qqkongjian,bt_sinaweibo,bt_lingqu,bt_back_fxsm,bt_lingqu_black;
     private TextView tv_money_today,tv_money_lj,tv_weixin,tv_pengyouquan,tv_QQ,tv_qqkongjian,tv_sinaweibo,tv_fenxiangshuoming;
     private ImageView iv_back_fx,iv_back_fx2;
     private RelativeLayout linearLayout;
     private LinearLayout line_fenxiangshuoming;
-
     private int day;
     private ArrayList<String> list = new ArrayList<>();
     private Handler handler = new Handler(){
@@ -89,10 +80,10 @@ public class FenxiangActivity extends Activity implements View.OnClickListener{
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_fenxiang);
-
         list=getIntent().getStringArrayListExtra("msg");
         gameid=list.get(0);
         Log.i("从sdk接受到数据",list.toString());
+        getMessageForGame();
         //横竖屏问题
         if (list.get(5)=="0"){
             if(this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
@@ -121,7 +112,8 @@ public class FenxiangActivity extends Activity implements View.OnClickListener{
             editor.commit();
             //初始化组件
             init();
-
+            Message message = new Message();
+            handler.sendMessage(message);
         }else{
             //初始化组件
             init();
@@ -167,6 +159,7 @@ public class FenxiangActivity extends Activity implements View.OnClickListener{
             }
             Message message = new Message();
             handler.sendMessage(message);
+
         }
 
 
@@ -252,9 +245,15 @@ public class FenxiangActivity extends Activity implements View.OnClickListener{
         //微信好友分享
         if (view.getId()==bt_weicheat.getId()){
             Platform.ShareParams sp = new Platform.ShareParams();
-            sp.setTitle("超爽福利手游");
-            sp.setText("内容：上线狂送VIP，海量元宝。零元做壕，畅爽玩耍");
-            sp.setImageUrl("http://open.symi.cn/Public/Thumb/ico/2017-04-20/58f89fac98237.jpg");
+            sp.setTitle("三国论剑");
+            sp.setText("1.上线送VIP8，8888元宝，50W金币 \n" +
+                    "2.充值比例1:450，各档位首次充值双倍 \n" +
+                    "3.前7日登陆送董卓、关羽 \n" +
+                    "4.大幅提升经验与掉落数量 \n" +
+                    "5.每日签到送8000元宝和武将 \n" +
+                    "6.超值月卡领64000元宝 \n" +
+                    "7.开服7日送8660元宝\t");
+            sp.setImageUrl("http://cdn.symi.cn/Public/Thumb/ico/2017-10-25/59f01dc8351ce.png");
             sp.setUrl(Constans.GAME_HOME+gameid);
             sp.setShareType(Platform.SHARE_WEBPAGE);
             Platform weixin = ShareSDK.getPlatform(this, Wechat.NAME);
@@ -293,9 +292,15 @@ public class FenxiangActivity extends Activity implements View.OnClickListener{
         }else if(view.getId()==bt_pengyouquan.getId()){
             //微信朋友圈分享
             Platform.ShareParams sp = new Platform.ShareParams();
-            sp.setTitle("超爽福利手游");
-            sp.setText("内容：上线狂送VIP，海量元宝。零元做壕，畅爽玩耍");
-            sp.setImageUrl("http://open.symi.cn/Public/Thumb/ico/2017-04-20/58f89fac98237.jpg");
+            sp.setTitle("三国论剑");
+            sp.setText("1.上线送VIP8，8888元宝，50W金币 \n" +
+                    "2.充值比例1:450，各档位首次充值双倍 \n" +
+                    "3.前7日登陆送董卓、关羽 \n" +
+                    "4.大幅提升经验与掉落数量 \n" +
+                    "5.每日签到送8000元宝和武将 \n" +
+                    "6.超值月卡领64000元宝 \n" +
+                    "7.开服7日送8660元宝\t");
+            sp.setImageUrl("http://cdn.symi.cn/Public/Thumb/ico/2017-10-25/59f01dc8351ce.png");
             sp.setUrl(Constans.GAME_HOME+gameid);
             sp.setShareType(Platform.SHARE_WEBPAGE);
             Platform pengyouquan = ShareSDK.getPlatform(this, WechatMoments.NAME);
@@ -334,9 +339,15 @@ public class FenxiangActivity extends Activity implements View.OnClickListener{
         }else if (view.getId()==bt_sinaweibo.getId()){
             //新浪微博分享
             Platform.ShareParams sp = new Platform.ShareParams();
-            sp.setTitle("超爽福利手游");
-            sp.setText("内容：上线狂送VIP，海量元宝。零元做壕，畅爽玩耍");
-            sp.setImageUrl("http://open.symi.cn/Public/Thumb/ico/2017-04-20/58f89fac98237.jpg");
+            sp.setTitle("三国论剑");
+            sp.setText("1.上线送VIP8，8888元宝，50W金币 \n" +
+                    "2.充值比例1:450，各档位首次充值双倍 \n" +
+                    "3.前7日登陆送董卓、关羽 \n" +
+                    "4.大幅提升经验与掉落数量 \n" +
+                    "5.每日签到送8000元宝和武将 \n" +
+                    "6.超值月卡领64000元宝 \n" +
+                    "7.开服7日送8660元宝\t");
+            sp.setImageUrl("http://cdn.symi.cn/Public/Thumb/ico/2017-10-25/59f01dc8351ce.png");
             sp.setUrl(Constans.GAME_HOME+gameid);
             sp.setShareType(Platform.SHARE_WEBPAGE);
             Platform weibo = ShareSDK.getPlatform(SinaWeibo.NAME);
@@ -373,9 +384,15 @@ public class FenxiangActivity extends Activity implements View.OnClickListener{
         }else if (view.getId()==bt_qq.getId()){
             //QQ好友分享
             Platform.ShareParams sp=new Platform.ShareParams();
-            sp.setTitle("超爽福利手游");
-            sp.setText("内容：上线狂送VIP，海量元宝。零元做壕，畅爽玩耍");
-            sp.setImageUrl("http://open.symi.cn/Public/Thumb/ico/2017-04-20/58f89fac98237.jpg");
+            sp.setTitle("三国论剑");
+            sp.setText("1.上线送VIP8，8888元宝，50W金币 \n" +
+                    "2.充值比例1:450，各档位首次充值双倍 \n" +
+                    "3.前7日登陆送董卓、关羽 \n" +
+                    "4.大幅提升经验与掉落数量 \n" +
+                    "5.每日签到送8000元宝和武将 \n" +
+                    "6.超值月卡领64000元宝 \n" +
+                    "7.开服7日送8660元宝\t");
+            sp.setImageUrl("http://cdn.symi.cn/Public/Thumb/ico/2017-10-25/59f01dc8351ce.png");
             sp.setTitleUrl(Constans.GAME_HOME+gameid);
             Platform qq = ShareSDK.getPlatform(QQ.NAME);
             qq.setPlatformActionListener(new PlatformActionListener() {
@@ -410,9 +427,15 @@ public class FenxiangActivity extends Activity implements View.OnClickListener{
         }else if (view.getId()==bt_qqkongjian.getId()){
             //qq空间分享
             Platform.ShareParams sp = new Platform.ShareParams();
-            sp.setTitle("超爽福利手游");
-            sp.setText("内容：上线狂送VIP，海量元宝。零元做壕，畅爽玩耍");
-            sp.setImageUrl("http://open.symi.cn/Public/Thumb/ico/2017-04-20/58f89fac98237.jpg");
+            sp.setTitle("三国论剑");
+            sp.setText("1.上线送VIP8，8888元宝，50W金币 \n" +
+                    "2.充值比例1:450，各档位首次充值双倍 \n" +
+                    "3.前7日登陆送董卓、关羽 \n" +
+                    "4.大幅提升经验与掉落数量 \n" +
+                    "5.每日签到送8000元宝和武将 \n" +
+                    "6.超值月卡领64000元宝 \n" +
+                    "7.开服7日送8660元宝\t");
+            sp.setImageUrl("http://cdn.symi.cn/Public/Thumb/ico/2017-10-25/59f01dc8351ce.png");
             sp.setTitleUrl(Constans.GAME_HOME+gameid);
 
             Platform qqkongjian = ShareSDK.getPlatform (QZone.NAME);
@@ -501,6 +524,48 @@ public class FenxiangActivity extends Activity implements View.OnClickListener{
             }.start();
 
         }
+    }
+    private void getMessageForGame(){
+        new Thread(){
+            @Override
+            public void run() {
+                try {
+                    JSONObject jsonObject = new JSONObject();
+                    jsonObject.put("chid", GetDateImpl.getChannel(getApplicationContext()));
+                    jsonObject.put("gid",list.get(0));
+                    URL url = new URL(Constans.URL_GETMESSAGE_FENXIANG);
+                    HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                    // 设置请求方式
+                    httpURLConnection.setRequestMethod("POST");
+                    // 设置编码格式
+                    httpURLConnection.setRequestProperty("Charset", "UTF-8");
+                    // 设置容许输出
+                    httpURLConnection.setDoOutput(true);
+                    httpURLConnection.connect();
+                    OutputStreamWriter outputStreamWriter = new OutputStreamWriter(httpURLConnection.getOutputStream());
+                    Log.i("发送内容", jsonObject.toString());
+                    outputStreamWriter.write(jsonObject.toString());
+                    outputStreamWriter.flush();
+                    outputStreamWriter.close();
+                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()));
+                    String message = bufferedReader.readLine().toString();
+                    JSONObject jsonObject1 = new JSONObject(message);
+                    title = jsonObject1.getString("title");
+                    text = jsonObject1.getString("text");
+                    imageurl = jsonObject1.getString("imageurl");
+                    gameurl = jsonObject1.getString("gameurl");
+                } catch (MalformedURLException e) {
+                    Log.i("获取APP下载地址时异常", e.toString());
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    Log.i("输入输出异常", e.toString());
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    Log.i("json解析异常", e.toString());
+                    e.printStackTrace();
+                }
+            }
+        }.start();
     }
     /** 获取分享订单号 */
     private String getOutTradeNo(){

@@ -206,7 +206,7 @@ public class TuiguangActivity extends Activity implements View.OnClickListener{
                     jsonObject.put("number",Integer.valueOf(number));
                     jsonObject.put("amount",amount);
                     jsonObject.put("userid",userid);
-                    HttpURLConnection httpURLConnection = (HttpURLConnection) new URL("http://www.49game.cn/SDKconfigAPI/Promote  ").openConnection();
+                    HttpURLConnection httpURLConnection = (HttpURLConnection) new URL(Constans.ORDER_TUIGUANG).openConnection();
                     httpURLConnection.setRequestMethod("POST");
                     httpURLConnection.setDoInput(true);
                     httpURLConnection.setDoOutput(true);

@@ -17,7 +17,7 @@ public class Constans {
     //分享订单发送接口
     public final static  String ORDER_SHARE = "http://www.49game.cn/ShareAPI/ShareAdd";
     //推广订单发送接口
-    public final static String ORDER_TUIGUANG= "http://www.49game.cn/SDKconfigAPI/Promote";
+    public final static String ORDER_TUIGUANG= "http://www.49game.cn/SDKconfig/Promote";
     //推广获取用户数据接口
     public final static  String TUIGUANG = "http://www.49game.cn/SDKconfigAPI/Pro";
     //礼包领取页
@@ -46,4 +46,8 @@ public class Constans {
     public static String URL_MESSAGE = "http://www.49game.cn/SDKconfigAPI/MessageApi";
     //消息推送统计接口
     public static String URL_MESSAGE_TONGJI = "http://www.49game.cn/SDKconfigAPI/SDgetdata/";
+    //分享内容获取接口
+    public static String URL_GETMESSAGE_FENXIANG = "http//www.baidu.com";
+    //获取app下载地址的接口
+    public final static String URL_APPADDRESS = "http://www.baicu.com";
 }

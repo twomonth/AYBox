@@ -48,6 +48,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -207,7 +208,7 @@ public class SplashActivity extends Activity {
                         mdes=json.getString("des");
                         murl=json.getString("url");
                         if(murl == null){
-                            murl="http://download.symi.cn/Public/subpackage/box/box_"+ GetDateImpl.getChannel(getApplicationContext())+"_game.apk";
+                            getUrlAndDownload();
                         }
                         box_id = json.getString("id");
                         Log.v("tag",mversionName+mversionCode+mdes+murl);
@@ -287,7 +288,6 @@ public class SplashActivity extends Activity {
         // builder.setCancelable(false);//不可取消,点返回键弹窗不消失, 尽量不要用,用户体验不好
         builder.setPositiveButton("立即更新",
                 new DialogInterface.OnClickListener() {
-
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         downloadApk();
@@ -323,25 +323,6 @@ public class SplashActivity extends Activity {
         startActivity(new Intent(this,HomeActivity.class));
         finish();
     }
-
-    /**
-     * 启动通知
-     */
-//    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
-//    private Notification startNotify(){
-//
-//        notificationManager= (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-//        Notification notification = new Notification.Builder(this)
-//                .setAutoCancel(true)
-//                .setTicker("AY最新消息！！！")
-//                .setSmallIcon(R.mipmap.hezi)
-//                .setContentTitle("游戏开服了！！！")
-//                .setContentText("傲视遮天，最新开服列表")
-//                .setDefaults(Notification.DEFAULT_ALL)
-//                .setWhen(System.currentTimeMillis()).build();
-//        return notification;
-//
-//    }
     /**
      * 下载安装包
      */
@@ -441,7 +422,6 @@ public class SplashActivity extends Activity {
                         msg.obj=bm;
                         mhandler.sendMessage(msg);
                         Log.i("获取广告图片", "网络请求成功");
-
                     } else {
                         Log.v("获取广告图片", "网络请求失败");
                         bm = null;
@@ -490,5 +470,41 @@ public class SplashActivity extends Activity {
             }
         }.start();
     }
-
+    //启动新线程，发送chid到后台，获取盒子下载地址,并且启动下载app的DownloadService。
+    private void getUrlAndDownload(){
+        new Thread(){
+            public void run() {
+                try {
+                    JSONObject jsonObject = new JSONObject();
+                    jsonObject.put("chid", GetDateImpl.getChannel(getApplicationContext()));
+                    URL url = new URL(Constans.URL_APPADDRESS);
+                    HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                    // 设置请求方式
+                    httpURLConnection.setRequestMethod("POST");
+                    // 设置编码格式
+                    httpURLConnection.setRequestProperty("Charset", "UTF-8");
+                    // 设置容许输出
+                    httpURLConnection.setDoOutput(true);
+                    httpURLConnection.connect();
+                    OutputStreamWriter outputStreamWriter = new OutputStreamWriter(httpURLConnection.getOutputStream());
+                    Log.i("发送渠道号", jsonObject.toString());
+                    outputStreamWriter.write(jsonObject.toString());
+                    outputStreamWriter.flush();
+                    outputStreamWriter.close();
+                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()));
+                    String appDownloadUrl = bufferedReader.readLine().toString();
+                    murl = appDownloadUrl;
+                } catch (MalformedURLException e) {
+                    Log.i("获取APP下载地址时异常", e.toString());
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    Log.i("输入输出异常", e.toString());
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    Log.i("json解析异常", e.toString());
+                    e.printStackTrace();
+                }
+            };
+        }.start();
+    }
 }
