@@ -89,13 +89,13 @@ public class HomeActivity extends Activity {
         public void handleMessage(Message msg) {
             webView.getSettings().setJavaScriptEnabled(true);
             webView.setDownloadListener(new MyWebViewDownLoadListener());
-            webView.loadUrl("http://" + path + channel_name);
-            Log.i("渠道wap页面网址", "http://" + path + channel_name);
+            webView.loadUrl("http://" + channel_name);
+            Log.i("渠道wap页面网址", "http://" + channel_name);
             webView.setWebViewClient(new WebViewClient() {
                 @Override
                 public boolean shouldOverrideUrlLoading(WebView view, String url) {
                     if (url.startsWith("http")||url.startsWith("https")){
-                        return super.shouldOverrideUrlLoading(view, "http://" + path + channel_name);//"http://"+path+channel_name
+                        return super.shouldOverrideUrlLoading(view, "http://"+channel_name);//"http://"+path+channel_name
                     }else {
                         Intent intent = new Intent(Intent.ACTION_VIEW , Uri.parse(url));
                         startActivity(intent);
@@ -139,8 +139,9 @@ public class HomeActivity extends Activity {
             public void run() {
                 try {
                     JSONObject jsonObject = new JSONObject();
-                    jsonObject.put("chid", GetDateImpl.getChannel(getApplicationContext()));
-                    HttpURLConnection httpURLConnection = (HttpURLConnection) new URL(Constans.CHANNEL_NAME).openConnection();
+//                    jsonObject.put("chid", GetDateImpl.getChannel(getApplicationContext()));
+                    jsonObject.put("chid", "CH2150942001223");
+                    HttpURLConnection httpURLConnection = (HttpURLConnection) new URL("http://www.49game.cn/index.php/Home/ChannelApi/ChannelFind").openConnection();
                     httpURLConnection.setRequestMethod("POST");
                     httpURLConnection.setDoInput(true);
                     httpURLConnection.setDoOutput(true);
