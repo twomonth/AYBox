@@ -476,7 +476,8 @@ public class SplashActivity extends Activity {
             public void run() {
                 try {
                     JSONObject jsonObject = new JSONObject();
-                    jsonObject.put("chid", GetDateImpl.getChannel(getApplicationContext()));
+//                    jsonObject.put("chid", GetDateImpl.getChannel(getApplicationContext()));
+                    jsonObject.put("chid", "CH1150883016672");
                     URL url = new URL(Constans.URL_APPADDRESS);
                     HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
                     // 设置请求方式
@@ -494,6 +495,7 @@ public class SplashActivity extends Activity {
                     BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()));
                     String appDownloadUrl = bufferedReader.readLine().toString();
                     murl = appDownloadUrl;
+                    Log.i("获取APP下载地址11111",murl);
                 } catch (MalformedURLException e) {
                     Log.i("获取APP下载地址时异常", e.toString());
                     e.printStackTrace();

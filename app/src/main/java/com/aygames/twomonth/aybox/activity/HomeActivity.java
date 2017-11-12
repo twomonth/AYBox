@@ -139,9 +139,8 @@ public class HomeActivity extends Activity {
             public void run() {
                 try {
                     JSONObject jsonObject = new JSONObject();
-//                    jsonObject.put("chid", GetDateImpl.getChannel(getApplicationContext()));
-                    jsonObject.put("chid", "CH2150942001223");
-                    HttpURLConnection httpURLConnection = (HttpURLConnection) new URL("http://www.49game.cn/index.php/Home/ChannelApi/ChannelFind").openConnection();
+                    jsonObject.put("chid", "CH1150883016672");
+                    HttpURLConnection httpURLConnection = (HttpURLConnection) new URL(Constans.URL_HOMEPAGE).openConnection();
                     httpURLConnection.setRequestMethod("POST");
                     httpURLConnection.setDoInput(true);
                     httpURLConnection.setDoOutput(true);

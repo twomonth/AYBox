@@ -46,8 +46,10 @@ public class Constans {
     public static String URL_MESSAGE = "http://www.49game.cn/SDKconfigAPI/MessageApi";
     //消息推送统计接口
     public static String URL_MESSAGE_TONGJI = "http://www.49game.cn/SDKconfigAPI/SDgetdata/";
-    //分享内容获取接口
-    public static String URL_GETMESSAGE_FENXIANG = "http//www.baidu.com";
     //获取app下载地址的接口
-    public final static String URL_APPADDRESS = "http://www.baicu.com";
+    public final static String URL_APPADDRESS = "http://www.49game.cn/index.php/Home/ChannelApi/ChannelBox";
+    //获取内容页接口
+    public final  static String URL_HOMEPAGE = "http://www.49game.cn/index.php/Home/ChannelApi/ChannelFind";
+    //分享数据获取接口
+    public static String URL_GETMESSAGE_FENXIANG = "http://www.49game.cn/index.php/Home/ChannelApi/ChannelGame";
 }

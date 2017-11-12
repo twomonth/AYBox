@@ -21,6 +21,7 @@ import com.aygames.twomonth.aybox.util.Constans;
 import com.aygames.twomonth.aybox.util.GetDataImpl;
 import com.aygames.twomonth.aybox.util.GetDateImpl;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.BufferedReader;
@@ -33,6 +34,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.PlatformActionListener;
@@ -531,24 +533,24 @@ public class FenxiangActivity extends Activity implements View.OnClickListener{
             public void run() {
                 try {
                     JSONObject jsonObject = new JSONObject();
-                    jsonObject.put("chid", GetDateImpl.getChannel(getApplicationContext()));
-                    jsonObject.put("gid",list.get(0));
-                    URL url = new URL(Constans.URL_GETMESSAGE_FENXIANG);
-                    HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-                    // 设置请求方式
+//                    jsonObject.put("chid", GetDateImpl.getChannel(getApplicationContext()));
+//                    jsonObject.put("gid",list.get(0));
+                    jsonObject.put("chid", "CH1150883016672");
+                    jsonObject.put("gid","GID1504839631852");
+                    HttpURLConnection httpURLConnection = (HttpURLConnection) new URL(Constans.URL_GETMESSAGE_FENXIANG).openConnection();
                     httpURLConnection.setRequestMethod("POST");
-                    // 设置编码格式
-                    httpURLConnection.setRequestProperty("Charset", "UTF-8");
-                    // 设置容许输出
+                    httpURLConnection.setDoInput(true);
                     httpURLConnection.setDoOutput(true);
+                    httpURLConnection.setRequestProperty("Content-Type", "text/html");
                     httpURLConnection.connect();
                     OutputStreamWriter outputStreamWriter = new OutputStreamWriter(httpURLConnection.getOutputStream());
-                    Log.i("发送内容", jsonObject.toString());
+                    Log.i("fenxiang发送", jsonObject.toString());
                     outputStreamWriter.write(jsonObject.toString());
                     outputStreamWriter.flush();
-                    outputStreamWriter.close();
+//                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()));
                     BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()));
                     String message = bufferedReader.readLine().toString();
+                    Log.i("分享返回数据",message);
                     JSONObject jsonObject1 = new JSONObject(message);
                     title = jsonObject1.getString("title");
                     text = jsonObject1.getString("text");
