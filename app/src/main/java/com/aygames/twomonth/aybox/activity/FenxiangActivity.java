@@ -247,16 +247,10 @@ public class FenxiangActivity extends Activity implements View.OnClickListener{
         //微信好友分享
         if (view.getId()==bt_weicheat.getId()){
             Platform.ShareParams sp = new Platform.ShareParams();
-            sp.setTitle("三国论剑");
-            sp.setText("1.上线送VIP8，8888元宝，50W金币 \n" +
-                    "2.充值比例1:450，各档位首次充值双倍 \n" +
-                    "3.前7日登陆送董卓、关羽 \n" +
-                    "4.大幅提升经验与掉落数量 \n" +
-                    "5.每日签到送8000元宝和武将 \n" +
-                    "6.超值月卡领64000元宝 \n" +
-                    "7.开服7日送8660元宝\t");
-            sp.setImageUrl("http://cdn.symi.cn/Public/Thumb/ico/2017-10-25/59f01dc8351ce.png");
-            sp.setUrl(Constans.GAME_HOME+gameid);
+            sp.setTitle(title);
+            sp.setText(text);
+            sp.setImageUrl(imageurl);
+            sp.setUrl(gameurl);
             sp.setShareType(Platform.SHARE_WEBPAGE);
             Platform weixin = ShareSDK.getPlatform(this, Wechat.NAME);
             weixin.setPlatformActionListener(new PlatformActionListener() {
@@ -294,16 +288,10 @@ public class FenxiangActivity extends Activity implements View.OnClickListener{
         }else if(view.getId()==bt_pengyouquan.getId()){
             //微信朋友圈分享
             Platform.ShareParams sp = new Platform.ShareParams();
-            sp.setTitle("三国论剑");
-            sp.setText("1.上线送VIP8，8888元宝，50W金币 \n" +
-                    "2.充值比例1:450，各档位首次充值双倍 \n" +
-                    "3.前7日登陆送董卓、关羽 \n" +
-                    "4.大幅提升经验与掉落数量 \n" +
-                    "5.每日签到送8000元宝和武将 \n" +
-                    "6.超值月卡领64000元宝 \n" +
-                    "7.开服7日送8660元宝\t");
-            sp.setImageUrl("http://cdn.symi.cn/Public/Thumb/ico/2017-10-25/59f01dc8351ce.png");
-            sp.setUrl(Constans.GAME_HOME+gameid);
+            sp.setTitle(title);
+            sp.setText(text);
+            sp.setImageUrl(imageurl);
+            sp.setUrl(gameurl);
             sp.setShareType(Platform.SHARE_WEBPAGE);
             Platform pengyouquan = ShareSDK.getPlatform(this, WechatMoments.NAME);
             pengyouquan.setPlatformActionListener(new PlatformActionListener() {
@@ -341,16 +329,10 @@ public class FenxiangActivity extends Activity implements View.OnClickListener{
         }else if (view.getId()==bt_sinaweibo.getId()){
             //新浪微博分享
             Platform.ShareParams sp = new Platform.ShareParams();
-            sp.setTitle("三国论剑");
-            sp.setText("1.上线送VIP8，8888元宝，50W金币 \n" +
-                    "2.充值比例1:450，各档位首次充值双倍 \n" +
-                    "3.前7日登陆送董卓、关羽 \n" +
-                    "4.大幅提升经验与掉落数量 \n" +
-                    "5.每日签到送8000元宝和武将 \n" +
-                    "6.超值月卡领64000元宝 \n" +
-                    "7.开服7日送8660元宝\t");
-            sp.setImageUrl("http://cdn.symi.cn/Public/Thumb/ico/2017-10-25/59f01dc8351ce.png");
-            sp.setUrl(Constans.GAME_HOME+gameid);
+            sp.setTitle(title);
+            sp.setText(text);
+            sp.setImageUrl(imageurl);
+            sp.setUrl(gameurl);
             sp.setShareType(Platform.SHARE_WEBPAGE);
             Platform weibo = ShareSDK.getPlatform(SinaWeibo.NAME);
             weibo.setPlatformActionListener(new PlatformActionListener() {
@@ -386,16 +368,10 @@ public class FenxiangActivity extends Activity implements View.OnClickListener{
         }else if (view.getId()==bt_qq.getId()){
             //QQ好友分享
             Platform.ShareParams sp=new Platform.ShareParams();
-            sp.setTitle("三国论剑");
-            sp.setText("1.上线送VIP8，8888元宝，50W金币 \n" +
-                    "2.充值比例1:450，各档位首次充值双倍 \n" +
-                    "3.前7日登陆送董卓、关羽 \n" +
-                    "4.大幅提升经验与掉落数量 \n" +
-                    "5.每日签到送8000元宝和武将 \n" +
-                    "6.超值月卡领64000元宝 \n" +
-                    "7.开服7日送8660元宝\t");
-            sp.setImageUrl("http://cdn.symi.cn/Public/Thumb/ico/2017-10-25/59f01dc8351ce.png");
-            sp.setTitleUrl(Constans.GAME_HOME+gameid);
+            sp.setTitle(title);
+            sp.setText(text);
+            sp.setImageUrl(imageurl);
+            sp.setUrl(gameurl);
             Platform qq = ShareSDK.getPlatform(QQ.NAME);
             qq.setPlatformActionListener(new PlatformActionListener() {
                 @Override
@@ -429,16 +405,10 @@ public class FenxiangActivity extends Activity implements View.OnClickListener{
         }else if (view.getId()==bt_qqkongjian.getId()){
             //qq空间分享
             Platform.ShareParams sp = new Platform.ShareParams();
-            sp.setTitle("三国论剑");
-            sp.setText("1.上线送VIP8，8888元宝，50W金币 \n" +
-                    "2.充值比例1:450，各档位首次充值双倍 \n" +
-                    "3.前7日登陆送董卓、关羽 \n" +
-                    "4.大幅提升经验与掉落数量 \n" +
-                    "5.每日签到送8000元宝和武将 \n" +
-                    "6.超值月卡领64000元宝 \n" +
-                    "7.开服7日送8660元宝\t");
-            sp.setImageUrl("http://cdn.symi.cn/Public/Thumb/ico/2017-10-25/59f01dc8351ce.png");
-            sp.setTitleUrl(Constans.GAME_HOME+gameid);
+            sp.setTitle(title);
+            sp.setText(text);
+            sp.setImageUrl(imageurl);
+            sp.setUrl(gameurl);
 
             Platform qqkongjian = ShareSDK.getPlatform (QZone.NAME);
             qqkongjian.setPlatformActionListener (new PlatformActionListener() {
@@ -533,10 +503,10 @@ public class FenxiangActivity extends Activity implements View.OnClickListener{
             public void run() {
                 try {
                     JSONObject jsonObject = new JSONObject();
-//                    jsonObject.put("chid", GetDateImpl.getChannel(getApplicationContext()));
-//                    jsonObject.put("gid",list.get(0));
-                    jsonObject.put("chid", "CH1150883016672");
-                    jsonObject.put("gid","GID1504839631852");
+                    jsonObject.put("chid", GetDateImpl.getChannel(getApplicationContext()));
+                    jsonObject.put("gid",list.get(0));
+//                    jsonObject.put("chid", "CH1150883016672");
+//                    jsonObject.put("gid","GID1504839631852");
                     HttpURLConnection httpURLConnection = (HttpURLConnection) new URL(Constans.URL_GETMESSAGE_FENXIANG).openConnection();
                     httpURLConnection.setRequestMethod("POST");
                     httpURLConnection.setDoInput(true);
@@ -549,13 +519,13 @@ public class FenxiangActivity extends Activity implements View.OnClickListener{
                     outputStreamWriter.flush();
 //                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()));
                     BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()));
-                    String message = bufferedReader.readLine().toString();
-                    Log.i("分享返回数据",message);
-                    JSONObject jsonObject1 = new JSONObject(message);
-                    title = jsonObject1.getString("title");
-                    text = jsonObject1.getString("text");
-                    imageurl = jsonObject1.getString("imageurl");
-                    gameurl = jsonObject1.getString("gameurl");
+                    JSONObject jsonObject1 = new JSONObject(bufferedReader.readLine().toString());
+                    JSONObject jsonObject2 = jsonObject1.getJSONObject("data");
+                    Log.i("分享返回数据",jsonObject2+"");
+                    title = jsonObject2.getString("app_name_cn");
+                    text = jsonObject2.getString("publicity");
+                    imageurl = jsonObject2.getString("ico_url");
+                    gameurl = jsonObject2.getString("url");
                 } catch (MalformedURLException e) {
                     Log.i("获取APP下载地址时异常", e.toString());
                     e.printStackTrace();

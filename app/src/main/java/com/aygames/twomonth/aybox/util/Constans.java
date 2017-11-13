@@ -52,4 +52,6 @@ public class Constans {
     public final  static String URL_HOMEPAGE = "http://www.49game.cn/index.php/Home/ChannelApi/ChannelFind";
     //分享数据获取接口
     public static String URL_GETMESSAGE_FENXIANG = "http://www.49game.cn/index.php/Home/ChannelApi/ChannelGame";
+    //礼包领取页面接口
+    public static String URL_GETGIFT = "http://www.49game.cn/index.php/Home/ChannelApi/ChannelWap";
 }

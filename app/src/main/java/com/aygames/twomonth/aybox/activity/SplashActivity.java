@@ -476,25 +476,21 @@ public class SplashActivity extends Activity {
             public void run() {
                 try {
                     JSONObject jsonObject = new JSONObject();
-//                    jsonObject.put("chid", GetDateImpl.getChannel(getApplicationContext()));
-                    jsonObject.put("chid", "CH1150883016672");
-                    URL url = new URL(Constans.URL_APPADDRESS);
-                    HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-                    // 设置请求方式
+                    jsonObject.put("chid", GetDateImpl.getChannel(getApplicationContext()));
+                    HttpURLConnection httpURLConnection = (HttpURLConnection) new URL(Constans.URL_APPADDRESS).openConnection();
                     httpURLConnection.setRequestMethod("POST");
-                    // 设置编码格式
-                    httpURLConnection.setRequestProperty("Charset", "UTF-8");
-                    // 设置容许输出
+                    httpURLConnection.setDoInput(true);
                     httpURLConnection.setDoOutput(true);
+                    httpURLConnection.setRequestProperty("Content-Type", "text/html");
                     httpURLConnection.connect();
                     OutputStreamWriter outputStreamWriter = new OutputStreamWriter(httpURLConnection.getOutputStream());
-                    Log.i("发送渠道号", jsonObject.toString());
                     outputStreamWriter.write(jsonObject.toString());
+                    Log.i("用户启动发送数据", jsonObject + "");
                     outputStreamWriter.flush();
-                    outputStreamWriter.close();
                     BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()));
-                    String appDownloadUrl = bufferedReader.readLine().toString();
-                    murl = appDownloadUrl;
+                    JSONObject jsonObject2 = new JSONObject(bufferedReader.readLine().toString());
+                    JSONObject jsonObject3 = jsonObject2.getJSONObject("data");
+                    murl = jsonObject3.getString("url");
                     Log.i("获取APP下载地址11111",murl);
                 } catch (MalformedURLException e) {
                     Log.i("获取APP下载地址时异常", e.toString());
