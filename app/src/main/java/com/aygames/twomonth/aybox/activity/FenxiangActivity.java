@@ -371,7 +371,8 @@ public class FenxiangActivity extends Activity implements View.OnClickListener{
             sp.setTitle(title);
             sp.setText(text);
             sp.setImageUrl(imageurl);
-            sp.setUrl(gameurl);
+            sp.setTitleUrl(gameurl);
+            sp.setShareType(Platform.SHARE_WEBPAGE);
             Platform qq = ShareSDK.getPlatform(QQ.NAME);
             qq.setPlatformActionListener(new PlatformActionListener() {
                 @Override
@@ -406,10 +407,12 @@ public class FenxiangActivity extends Activity implements View.OnClickListener{
             //qq空间分享
             Platform.ShareParams sp = new Platform.ShareParams();
             sp.setTitle(title);
+            sp.setTitleUrl(gameurl); // 标题的超链接
             sp.setText(text);
             sp.setImageUrl(imageurl);
-            sp.setUrl(gameurl);
-
+            sp.setSite(title);
+            sp.setSiteUrl(gameurl);
+            sp.setShareType(Platform.SHARE_WEBPAGE);
             Platform qqkongjian = ShareSDK.getPlatform (QZone.NAME);
             qqkongjian.setPlatformActionListener (new PlatformActionListener() {
                 @Override
@@ -505,8 +508,6 @@ public class FenxiangActivity extends Activity implements View.OnClickListener{
                     JSONObject jsonObject = new JSONObject();
                     jsonObject.put("chid", GetDateImpl.getChannel(getApplicationContext()));
                     jsonObject.put("gid",list.get(0));
-//                    jsonObject.put("chid", "CH1150883016672");
-//                    jsonObject.put("gid","GID1504839631852");
                     HttpURLConnection httpURLConnection = (HttpURLConnection) new URL(Constans.URL_GETMESSAGE_FENXIANG).openConnection();
                     httpURLConnection.setRequestMethod("POST");
                     httpURLConnection.setDoInput(true);

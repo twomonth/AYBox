@@ -65,6 +65,7 @@ public class Activity_advertisement extends Activity {
             }
         });
         adverAdd();
+        this.finish();
     }
 
     private void adverAdd() {

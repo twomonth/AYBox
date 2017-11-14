@@ -53,5 +53,7 @@ public class Constans {
     //分享数据获取接口
     public static String URL_GETMESSAGE_FENXIANG = "http://www.49game.cn/index.php/Home/ChannelApi/ChannelGame";
     //礼包领取页面接口
-    public static String URL_GETGIFT = "http://www.49game.cn/index.php/Home/ChannelApi/ChannelWap";
+    public static String URL_GETGIFT = "http://www.49game.cn/index.php/Home/ChannelApi/ChannelGameWap";
+    //广告下载地址
+    public static String URL_ADVERDOWNLOAD = "http://www.49game.cn/index.php/Home/ChannelApi/ChannelGameDownload";
 }

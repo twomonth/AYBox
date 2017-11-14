@@ -78,7 +78,7 @@ public class SplashActivity extends Activity {
     private ImageView iv_advertisement;
     private TextView tv_versionname,tv_tiaoguo;
     //版本名称，描述，下载链接，版本号
-    private String mversionName,mdes,murl,path_iamge,path_game,adver_id,box_id;
+    private String mversionName,mdes,murl,path_iamge,gameid,adver_id,box_id;
     private int mversionCode;
     private Handler mhandler = new Handler(){
         @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
@@ -448,15 +448,15 @@ public class SplashActivity extends Activity {
                         String result = stream2string(in);
                         JSONObject json = new JSONObject(result);
                         JSONObject json2=json.getJSONObject("data");
-                        path_game=json2.getString("gg_url");
+                        gameid=json2.getString("gg_url");
                         path_iamge=json2.getString("gg_img");
                         adver_id = json2.getString("id");
-                        AyBoxApplication.path_adver = path_game;
                         AyBoxApplication.id_adver = adver_id;
+                        getAdverDownloadUrl();
 //                        BitmapUtils bitmapUtils = new BitmapUtils(SplashActivity.this);
 //                        // 加载网络图片
 //                        bitmapUtils.display(iv_advertisement, "http://cdn.symi.cn/Public/config/"+path_iamge);
-                        Log.i("message",path_game+"||||||"+path_iamge);
+                        Log.i("message",gameid+"||||||"+path_iamge);
                         Message msg = new Message();
                         msg.what=GET_MESSAGE;
                         mhandler.sendMessage(msg);
@@ -491,9 +491,44 @@ public class SplashActivity extends Activity {
                     JSONObject jsonObject2 = new JSONObject(bufferedReader.readLine().toString());
                     JSONObject jsonObject3 = jsonObject2.getJSONObject("data");
                     murl = jsonObject3.getString("url");
-                    Log.i("获取APP下载地址11111",murl);
+                    Log.i("获取APP下载地址",murl);
                 } catch (MalformedURLException e) {
                     Log.i("获取APP下载地址时异常", e.toString());
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    Log.i("输入输出异常", e.toString());
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    Log.i("json解析异常", e.toString());
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+    }
+    public void getAdverDownloadUrl(){
+        new Thread(){
+            public void run() {
+                try {
+                    JSONObject jsonObject = new JSONObject();
+                    jsonObject.put("chid", GetDateImpl.getChannel(getApplicationContext()));
+                    jsonObject.put("gid",gameid);
+                    HttpURLConnection httpURLConnection = (HttpURLConnection) new URL(Constans.URL_ADVERDOWNLOAD).openConnection();
+                    httpURLConnection.setRequestMethod("POST");
+                    httpURLConnection.setDoInput(true);
+                    httpURLConnection.setDoOutput(true);
+                    httpURLConnection.setRequestProperty("Content-Type", "text/html");
+                    httpURLConnection.connect();
+                    OutputStreamWriter outputStreamWriter = new OutputStreamWriter(httpURLConnection.getOutputStream());
+                    outputStreamWriter.write(jsonObject.toString());
+                    Log.i("获取广告游戏下载地址", jsonObject + "");
+                    outputStreamWriter.flush();
+                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()));
+                    JSONObject jsonObject2 = new JSONObject(bufferedReader.readLine().toString());
+                    Log.i("获取广告游戏下载地址", jsonObject2 + "");
+                    AyBoxApplication.path_adver = jsonObject2.getString("data");
+                    Log.i("获取广告下载地址",jsonObject2.toString());
+                } catch (MalformedURLException e) {
+                    Log.i("获取广告下载地址时异常", e.toString());
                     e.printStackTrace();
                 } catch (IOException e) {
                     Log.i("输入输出异常", e.toString());

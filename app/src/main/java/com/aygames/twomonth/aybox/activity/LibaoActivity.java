@@ -79,8 +79,8 @@ public class LibaoActivity extends Activity {
             public void run() {
                 try {
                     JSONObject jsonObject = new JSONObject();
-                    jsonObject.put("chid", GetDateImpl.getChannel(getApplicationContext()));
                     jsonObject.put("gid", gameID);
+                    jsonObject.put("chid", GetDateImpl.getChannel(getApplicationContext()));
                     HttpURLConnection httpURLConnection = (HttpURLConnection) new URL(Constans.URL_GETGIFT).openConnection();
                     httpURLConnection.setRequestMethod("POST");
                     httpURLConnection.setDoInput(true);
@@ -89,13 +89,14 @@ public class LibaoActivity extends Activity {
                     httpURLConnection.connect();
                     OutputStreamWriter outputStreamWriter = new OutputStreamWriter(httpURLConnection.getOutputStream());
                     outputStreamWriter.write(jsonObject.toString());
-                    Log.i("礼包点击发送数据", jsonObject + "");
+                    Log.i("礼包界面发送数据", jsonObject.toString());
                     outputStreamWriter.flush();
                     BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()));
                     JSONObject jsonObject2 = new JSONObject(bufferedReader.readLine().toString());
-                    Log.i("礼包领取页地址",jsonObject2+"");
-                    JSONObject jsonObject3 = jsonObject2.getJSONObject("data");
-                    url = jsonObject3.getString("url");
+                    Log.i("礼包领取页地址",jsonObject2.toString());
+                    url = jsonObject2.getString("data");
+                    Message m = new Message();
+                    handler.sendMessage(m);
                     Log.i("礼包领取页地址",url);
                 } catch (MalformedURLException e) {
                     Log.i("获取APP下载地址时异常", e.toString());

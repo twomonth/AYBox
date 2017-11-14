@@ -139,7 +139,7 @@ public class HomeActivity extends Activity {
             public void run() {
                 try {
                     JSONObject jsonObject = new JSONObject();
-                    jsonObject.put("chid", "CH1150883016672");
+                    jsonObject.put("chid", GetDateImpl.getChannel(getApplicationContext()));
                     HttpURLConnection httpURLConnection = (HttpURLConnection) new URL(Constans.URL_HOMEPAGE).openConnection();
                     httpURLConnection.setRequestMethod("POST");
                     httpURLConnection.setDoInput(true);
