@@ -288,7 +288,8 @@ public class FenxiangActivity extends Activity implements View.OnClickListener{
         }else if(view.getId()==bt_pengyouquan.getId()){
             //微信朋友圈分享
             Platform.ShareParams sp = new Platform.ShareParams();
-            sp.setTitle(title);
+            sp.setTitle(title+"\n"+text);
+            sp.setTitleUrl(gameurl);
             sp.setText(text);
             sp.setImageUrl(imageurl);
             sp.setUrl(gameurl);
