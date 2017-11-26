@@ -7,9 +7,12 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
+import android.support.v4.content.FileProvider;
 import android.util.Log;
 
+import com.aygames.twomonth.aybox.BuildConfig;
 import com.aygames.twomonth.aybox.R;
 import com.aygames.twomonth.aybox.application.AyBoxApplication;
 import com.aygames.twomonth.aybox.util.Constans;
@@ -78,8 +81,13 @@ public abstract class MyDownloadListener extends AbsDownloadListener {
     Log.i("ok",path+"");
     Intent install = new Intent(Intent.ACTION_VIEW);
     install.addCategory(Intent.CATEGORY_DEFAULT);
+      install.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//    if (Build.VERSION.SDK_INT >=Build.VERSION_CODES.N){
+//        Uri contentUri = FileProvider.getUriForFile(context, BuildConfig.APPLICATION_ID + ".fileProvider", new File(path));
+//        install.setDataAndType(contentUri,"application/vnd.android.package-archive");
+//    }
     install.setDataAndType(Uri.parse("file://"+path), "application/vnd.android.package-archive");
-    install.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
     context.startActivity(install);
     initList();
     new Thread(){

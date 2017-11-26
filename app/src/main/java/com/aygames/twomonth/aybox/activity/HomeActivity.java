@@ -214,7 +214,9 @@ public class HomeActivity extends Activity {
         iv_closeadver = (ImageView) findViewById(R.id.iv_closeadver);
         iv_inneradver = (ImageView) findViewById(R.id.iv_inneradver);
         iv_download = (ImageView) findViewById(R.id.iv_download);
-
+        if (Build.VERSION.SDK_INT >=Build.VERSION_CODES.N){
+            iv_download.setVisibility(View.GONE);
+        }
     }
 
     private class MyWebViewDownLoadListener implements DownloadListener {
@@ -223,35 +225,46 @@ public class HomeActivity extends Activity {
         @Override
         public void onDownloadStart(String url, String userAgent, String contentDisposition, String mimetype,
                                     long contentLength) {
-            File d = new File(Environment.getExternalStorageDirectory().getAbsolutePath(), "AYgames");
-            if (!d.exists()) {
-                d.mkdirs();
-            }
-            int index = url.lastIndexOf("/");
-            String game_name = url.substring(index + 1);
-            gid = game_name.substring(0, game_name.indexOf("_"));
-            String path = d.getAbsolutePath().concat("/").concat(game_name);
-            final DownloadInfo downloadInfo = new DownloadInfo.Builder().setUrl(url)
-                    .setPath(path)
-                    .build();
-            AyBoxApplication.downloadManager.download(downloadInfo);
-            Toast.makeText(getApplicationContext(), "开始下载，点击右上角下载按钮查看", Toast.LENGTH_LONG).show();
-            downloadInfo.setDownloadListener(new MyDownloadListener(getApplicationContext(), downloadInfo.getPath()) {
-                @Override
-                public void onRefresh() {
-                }
 
-                @Override
-                public void onDownloadFailed(DownloadException e) {
-                    if (e.getCode() == 5){
-                        try {
-                            DBController.getInstance(getApplicationContext()).deleteMyDownloadInfo(downloadInfo.getUri().hashCode());
-                        } catch (SQLException sql) {
-                            sql.printStackTrace();
+            if (Build.VERSION.SDK_INT >=Build.VERSION_CODES.N){
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_VIEW);
+                intent.addCategory(Intent.CATEGORY_BROWSABLE);
+                intent.setData(Uri.parse(url));
+                startActivity(intent);
+            }else {
+                File d = new File(Environment.getExternalStorageDirectory().getAbsolutePath(), "AYgames");
+                if (!d.exists()) {
+                    d.mkdirs();
+                }
+                int index = url.lastIndexOf("/");
+                String game_name = url.substring(index + 1);
+                gid = game_name.substring(0, game_name.indexOf("_"));
+                String path = d.getAbsolutePath().concat("/").concat(game_name);
+                final DownloadInfo downloadInfo = new DownloadInfo.Builder().setUrl(url)
+                        .setPath(path)
+                        .build();
+                AyBoxApplication.downloadManager.download(downloadInfo);
+                Toast.makeText(getApplicationContext(), "开始下载，点击右上角下载按钮查看", Toast.LENGTH_LONG).show();
+                downloadInfo.setDownloadListener(new MyDownloadListener(getApplicationContext(), downloadInfo.getPath()) {
+                    @Override
+                    public void onRefresh() {
+                    }
+
+                    @Override
+                    public void onDownloadFailed(DownloadException e) {
+                        if (e.getCode() == 5){
+                            try {
+                                DBController.getInstance(getApplicationContext()).deleteMyDownloadInfo(downloadInfo.getUri().hashCode());
+                            } catch (SQLException sql) {
+                                sql.printStackTrace();
+                            }
                         }
                     }
-                }
-            });
+                });
+            }
+
+
             new Thread() {
                 @Override
                 public void run() {
